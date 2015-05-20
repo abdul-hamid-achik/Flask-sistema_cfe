@@ -21,27 +21,27 @@
             </div>
             <div id="empleados-menu">
                 <p style="display:inline">Evaluando a: </p>
-                <select id="empleados" ng-model="usuario" ng-options="usuario.nombre for usuario in usuarios.usuarios" ng-change="selectedValue()">
+                <select id="empleados" ng-model="colega_seleccionado" ng-options="colega.nombre for colega in colegas" ng-change="selectedValue(colega_seleccionado)">
                     <option value="" disabled>Seleccione a alguien</option>
                 </select>
             </div>
             <div class="cuadro" id="izq">
-                <h2 class="competencias_cuadro_titulo">Competencias Existentes: {{ usuario.competencias.existentes.length}}</h2>
+                <h2 class="competencias_cuadro_titulo">Competencias Existentes: {{ competencias_existentes.length}}</h2>
                 <ul class="competencias_lista" id="izq-ls">
-                    <li data-ng-model="usuario" data-ng-repeat="competencia in usuario.competencias.existentes "><a href="#" ng-click="remove($index)">{{ competencia }}</a></li>
+                    <li data-ng-model="usuario" data-ng-repeat="competencia in competencias_existentes "><a href="#" ng-click="remove($index)">{{ competencia.nombre }}</a></li>
 
                 </ul>
             </div>
             <div class="cuadro" >
-                <h2 class="competencias_cuadro_titulo">Competencias Neutras: {{ usuario.competencias.neutras.length}}</h2>
+                <h2 class="competencias_cuadro_titulo">Competencias Neutras: {{ competencias.length }}</h2>
                 <ul class="competencias_lista">
-                    <li data-ng-model="usuario" data-ng-repeat="competencia in usuario.competencias.neutras "><a href="#" ng-click="remove($index)">{{ competencia }}</a></li>
+                    <li data-ng-model="usuario" data-ng-repeat="competencia in competencias "><a href="#" ng-click="remove($index)">{{ competencia.nombre }}</a></li>
                 </ul>
             </div>
             <div class="cuadro" id="der">
-                <h2 class="competencias_cuadro_titulo">Competencias Inexistentes:  {{ usuario.competencias.inexistentes.length }}</h2>
+                <h2 class="competencias_cuadro_titulo">Competencias Inexistentes:  {{ competencias_inexistentes.length }}</h2>
                 <ul class="competencias_lista" id="der-ls">
-                    <li data-ng-model="usuario" data-ng-repeat="competencia in usuario.competencias.inexistentes "><a href="#" ng-click="remove($index)">{{ competencia }}</a></li>
+                    <li data-ng-model="usuario" data-ng-repeat="competencia in competencias_inexistentes "><a href="#" ng-click="remove($index)">{{ competencia.nombre }}</a></li>
 
                 </ul>
 

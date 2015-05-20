@@ -1,38 +1,124 @@
 
 angular.module('Sistema-cfe', [])
     .controller('competenciasCtrl', function ($scope, $http) {
-    $scope.usuarios = [];
+    function get_existentes(){
+      $scope.competencias_existentes = [];
+      $http.post('/get_competencias/existentes', 
+      { 
+        colega : $scope.colega,
+        tipo : 'Existente'
+      }).success(function(response){
+        $scope.competencias_existentes = response;
+        $scope.com = response.length;
+         for(var i = 0; i < $scope.competencias.length;  i++){
+          for(var j = 0; j < $scope.com; j++){
+            if($scope.competencias[i]['nombre'] == $scope.competencias_existentes[j]['nombre']){
+              $scope.competencias.splice(i,1);
+            }
+          }
+        }
+
+      });
+
+     
+    }
+
+    function get_inexistentes(){
+      $scope.competencias_inexistentes = [];
+      $http.post('/get_competencias/inexistentes', 
+      { 
+        colega : $scope.colega,
+        tipo : 'Inexistente'
+      }).success(function(response){
+        $scope.competencias_inexistentes = response;
+        $scope.com = response.length;
+         for(var i = 0; i <= $scope.competencias.length;  i++){
+          for(var j = 0; j <= $scope.com; j++){
+            if($scope.competencias[i]['nombre'] == $scope.competencias_inexistentes[j]['nombre']){
+              $scope.competencias.splice(i,1);
+            }
+          }
+        }
+
+      });
+
+     
+    }
     
+    $http.get('/get_colegas_evaluar').success(function(response){
+      $scope.colegas = response;
+
+    });
+    function getCompetencias(){
+    $http.get('/get_competencias').success(function(response){
+      $scope.competencias = response;
+    });
+  }
+  getCompetencias();
+
+    $http.get('/usuario').success(function(response){
+      $scope.usuario = response;
+    })
     
     function borrarTitulo(guardar){
-            guardar = guardar || "Competencias"
+            guardar = guardar || "Competencias";
          $('#competencia-menu h1').empty();
          $('#competencia-menu h1').append(guardar);
     }
 
-    
     $scope.remove = function($index) { 
-      var guardar = $scope.usuario.competencias.neutras[$index];
-      $scope.usuario.competencias.neutras.splice($index, 1);
-        borrarTitulo(guardar);
+      var guardar = $scope.competencias[$index];
+      if ($scope.colega == null){
+        alert('Selecciona a un colega para evaluar primero!');
+
+      }
+      else{
+        $scope.competencia_actual = guardar;
+        $scope.competencias.splice($index, 1);
+          borrarTitulo(guardar.nombre);
+      }
     }
     
     $scope.si = function(){
         var comp = $('h1').html();
-        $scope.usuario.competencias.existentes.push(comp);
+
+        alert(comp);
+        $http.post('/evaluando', {
+          colega : $scope.colega,
+          competencia : $scope.competencia_actual,
+          tipo : 'Existente'
+        }).success(function(response){
+          console.log(response);
+        });
+
+        $scope.competencias_existentes.push(comp);
         borrarTitulo()
-        
+        get_existentes();
     }
     
     
     $scope.no = function(){
-        var comp = $('h1').html();  
-        $scope.usuario.competencias.inexistentes.push(comp);
-        borrarTitulo();
-        
+        var comp = $('h1').html();
+        alert(comp);
+        $http.post('/evaluando', {
+          colega : $scope.colega,
+          competencia : $scope.competencia_actual,
+          tipo : 'Inexistente'
+        }).success(function(response){
+          console.log(response);
+        });
+
+        $scope.competencias_inexistentes.push(comp);
+        borrarTitulo()
+        get_inexistentes();
         
     }
+
     $scope.selectedValue = function(value){
+      $scope.colega = value;
+      getCompetencias();
+      get_existentes(value);
+      get_inexistentes(value);
     }
 
     $scope.submit = function(event){
