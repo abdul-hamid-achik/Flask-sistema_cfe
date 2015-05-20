@@ -10,13 +10,7 @@ angular.module('Sistema-cfe', [])
       }).success(function(response){
         $scope.competencias_existentes = response;
         $scope.com = response.length;
-         for(var i = 0; i < $scope.competencias.length;  i++){
-          for(var j = 0; j < $scope.com; j++){
-            if($scope.competencias[i]['nombre'] == $scope.competencias_existentes[j]['nombre']){
-              $scope.competencias.splice(i,1);
-            }
-          }
-        }
+         
 
       });
 
@@ -32,17 +26,8 @@ angular.module('Sistema-cfe', [])
       }).success(function(response){
         $scope.competencias_inexistentes = response;
         $scope.com = response.length;
-         for(var i = 0; i <= $scope.competencias.length;  i++){
-          for(var j = 0; j <= $scope.com; j++){
-            if($scope.competencias[i]['nombre'] == $scope.competencias_inexistentes[j]['nombre']){
-              $scope.competencias.splice(i,1);
-            }
-          }
-        }
-
+         
       });
-
-     
     }
     
     $http.get('/get_colegas_evaluar').success(function(response){
@@ -54,7 +39,6 @@ angular.module('Sistema-cfe', [])
       $scope.competencias = response;
     });
   }
-  getCompetencias();
 
     $http.get('/usuario').success(function(response){
       $scope.usuario = response;

@@ -155,7 +155,6 @@ def existentes():
 	respuesta = list()
 	resultados = list()
 	peticion = request.get_json()
-	print(peticion)
 	empleado = g.user._get_current_object() 
 	tipo = models.TipoCompetencia.get(models.TipoCompetencia.nombre ** peticion['tipo'])
 	colega = models.Usuario.get(models.Usuario.nombre**peticion['colega']['nombre'])
@@ -165,11 +164,10 @@ def existentes():
 		)
 	for evaluacion in evaluaciones:
 		resultados.append(models.Competencias.get(models.Competencias.id**evaluacion.competencia))
-
 	for resultado in resultados:
 		respuesta.append(resultado.to_json())
-
 	return json.dumps(respuesta)
+
 
 @app.route('/get_competencias/inexistentes', methods=['POST'])
 @login_required
@@ -177,7 +175,6 @@ def inexistentes():
 	respuesta = list()
 	resultados = list()
 	peticion = request.get_json()
-	print(peticion)
 	empleado = g.user._get_current_object() 
 	tipo = models.TipoCompetencia.get(models.TipoCompetencia.nombre ** peticion['tipo'])
 	colega = models.Usuario.get(models.Usuario.nombre**peticion['colega']['nombre'])
@@ -187,20 +184,31 @@ def inexistentes():
 		)
 	for evaluacion in evaluaciones:
 		resultados.append(models.Competencias.get(models.Competencias.id**evaluacion.competencia))
-
 	for resultado in resultados:
 		respuesta.append(resultado.to_json())
-
 	return json.dumps(respuesta)
+
 
 @app.route('/get_competencias/neutras', methods=['POST'])
 @login_required
 def neutras():
-	pass
+	respuesta = list()
+	resultados = list()
+	tipo = models.TipoCompetencia.get(models.TipoCompetencia.nombre ** peticion['tipo'])
+	colega = models.Usuario.get(models.Usuario.nombre**peticion['colega']['nombre'])
+	evaluaciones = models.Evaluando.select().where(
+		(models.Evaluando.colega == colega) &
+		(models.Evaluando.tipo == tipo)
+		)
+	for evaluacion in evaluaciones:
+		resultados.append(models.Competencias.get(models.Competencias.id**evaluacion.competencia))
+	for resultado in resultados:
+		respuesta.append(resultado.to_json())
+	return json.dumps(respuesta)
+
 
 if __name__ == '__main__':
 	models.initialize()
-	
 	app.run(
     	debug=DEBUG, 
     	port=PORT, 
