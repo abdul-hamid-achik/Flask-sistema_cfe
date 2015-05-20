@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="/static/css/bootstrap.css">
+        <link rel="stylesheet" href="/static/css/styles.css">
+        <script src="/static/js/jquery-2.1.3.js"></script>
+        <script src="/static/js/bootstrap.js"></script>
+        <script src="/static/js/angular.js"></script> 
+        <script src="/static/js/ui-utils.js"></script>
+        <script src="/static/js/others.js"></script>
+        <script src="/static/js/app.js"></script>
+    </head>
+
+    <body ng-app="Sistema-cfe">
+
+
+
+    <div id='wrapper' ng-controller='colegas'>
+
+            <h1>Por favor selecciona quien te podra evaluar de tus compañeros: #{{ colegas.length }}</h1>
+            <div id='evaluar_colega'>
+                <ul> 
+                    <li ng-repeat='colega in colegas' id="{{ colega.rpe }}"><a href="" ng-click='submit(colega)'>{{ colega.nombre }}</a></li>
+                </ul>
+
+        
+            </div>
+            <button id='evaluar_colega_btn' ng-click='continuar()'>Continuar</button>
+        
+    </div>
+      <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    </body>
+</html>

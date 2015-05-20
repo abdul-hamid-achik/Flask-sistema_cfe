@@ -1,0 +1,64 @@
+body{
+    overflow: auto;
+}
+.cuadro{
+    display:fixed;
+    width: 33.33%;
+    float:left;
+    height: 350px;
+    overflow: auto;
+    border: 1px solid rgb(40,100,200);
+}
+.cuadro ul li {
+    font-size: 0.875em;
+    
+}
+#competencia-menu{
+    display: inline-block;
+    float:left;
+    width: 70%;
+}
+#empleados-menu{
+    
+    padding: 45px 0 45px 25px;
+    display: inline-block;
+    width:30%;
+}
+.competencias_lista li{
+    margin: 20px 20px -20px -40px;
+    padding:5px 5px 5px 15px;
+    list-style:none;
+}
+.competencias_cuadro_titulo{
+    margin-top: 1px;
+    text-align: center;
+    padding:5px;
+    font-size: 1.1em;
+}
+#acceso{
+    padding:25% 34.55%;
+    text-align: center;
+    position: fixed;
+    background:white;
+
+}
+
+.chart div {
+  font: 10px sans-serif;
+  background-color: steelblue;
+  text-align: right;
+  padding: 3px;
+  margin: 1px;
+  color: white;
+}
+#evaluar_colega{
+    margin-left: 35%;
+    overflow: auto;
+    display: fixed;
+    height:250px;
+    width:300px;
+    border: 1px solid rgb(40,100,200);
+}
+#evaluar_colega_btn{
+    margin-left:35%;
+}

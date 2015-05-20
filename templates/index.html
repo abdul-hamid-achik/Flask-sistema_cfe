@@ -1,0 +1,11 @@
+ {% extends 'layout.html' %}
+ {% block contenido %}
+ <div id="acceso">
+            <form id="form"  method='POST' action='/iniciar_sesion'>
+                <input type="email" placeholder="correo" id="correo" name="correo">
+                <input type="password" placeholder="rpe" id="password" name="password">
+                <button type="submit" ng-click="submit()">Iniciar Sesion</button>
+            </form>
+ 
+</div>
+{% endblock %}
