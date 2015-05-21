@@ -50,8 +50,8 @@ class Usuario(UserMixin, Model):
     def evaluan(self):
     	return (
     		Usuario.select().join(
-    			Evalua, on=Evalua.evaluador).where(
-    			Evalua.evaluado == self)
+    			Evalua, on=Evalua.evaluado).where(
+    			Evalua.evaluador == self)
     		)
     		
 

@@ -9,9 +9,7 @@ angular.module('Sistema-cfe', [])
         tipo : 'Existente'
       }).success(function(response){
         $scope.competencias_existentes = response;
-        $scope.com = response.length;
          
-
       });
 
      
@@ -25,8 +23,28 @@ angular.module('Sistema-cfe', [])
         tipo : 'Inexistente'
       }).success(function(response){
         $scope.competencias_inexistentes = response;
-        $scope.com = response.length;
-         
+        $scope.com = response.length + $scope.competencias_existentes.length;
+        $scope.lista = [];
+        for(var y = 0; y < $scope.competencias_inexistentes.length; y++){
+          $scope.lista.push($scope.competencias_inexistentes[x]);
+          console.log($scope.competencias_inexistentes);
+        } 
+        for(var x = 0; x < $scope.competencias_existentes.length; x++){
+          $scope.lista.push($scope.competencias_existentes[x]);
+
+          console.log($scope.competencias_existentes[x]);
+        } 
+        console.log($scope.lista);
+         for(var i = 0; i <= $scope.competencias.length;  i++){
+          for(var j = 0; j <= $scope.com; j++){
+            console.log($scope.competencias[i]['nombre'] + " " + $scope.competencias_inexistentes[j]['nombre']);
+              if($scope.competencias[i]['nombre'] == $scope.lista[j]['nombre']){
+                $scope.competencias.splice(i,1);
+              }
+            
+          }
+        }
+
       });
     }
     

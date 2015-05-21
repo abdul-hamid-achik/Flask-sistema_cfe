@@ -103,7 +103,7 @@ def puede_evaluarme():
 		evaluado=g.user._get_current_object(),
 		evaluador=get_modelo
 		)
-	print(models.Evalua.get(models.Evalua.evaluado**g.user._get_current_object()))
+	print(models.Evalua.get(models.Evalua.evaluador**g.user._get_current_object()))
 	string = "{} ahora podra ser evaluada por {}".format(g.user.nombre, colega['nombre'])
 	return json.dumps({'response': string})
 
