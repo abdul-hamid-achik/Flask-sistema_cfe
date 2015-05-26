@@ -1,0 +1,10 @@
+Realiza las clases de Java requeridas para manejar la siguiente información de una tienda.
+
+La tienda maneja datos de sus Empleados. De ellos se maneja su nombre, apellidoPaterno, apellidoMaterno, fechaNacimiento, fechaContratación y salario. Las fechas de nacimiento y contratación deben declararse tipo Fecha. Se maneja una tasa del impuesto que se retendrá a los empleados, la cual es igual para todos.Se tienen dos tipos de empleados, empleados Fijos y Vendedores. De los empleados fijos se maneja el salario que tiene el empleado. De los empleados por Comisión se registra un porcentaje de comisión y el monto de ventas realizadas.
+Considera que la tienda tiene un método para agregar un empleado al grupo de empleados con que cuenta.
+
+Define mínimo dos constructores, las variables de instancia y de clase requeridas,  los métodos get y set correspondientes  un método calculaImpuesto que permita calcular lo que el empleado pagará de impuesto (tasa de impuesto * salario). Para Vendedor se requiere poder calcular el monto a pagar por ventas. Incluye un método que regrese en un String todos los datos del Empleado, Empleado fijo o vendedor, según corresponda.
+
+Considera además que se desea imprimir la fecha en dos formatos: MM/DD/AAAA y Mes Dia, Año. 
+
+Escribe un programa para probar la aplicación. Cree instancias de Empleados, Empleados fijos, Vendedores y asígnalos a una tienda. 

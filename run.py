@@ -17,7 +17,7 @@ app.secret_key = 'daniela_omg'
 
 login_manager = LoginManager()
 login_manager.init_app(app)
-login_manager.login_view = 'iniciar_sesion'
+login_manager.login_view = '/'
 
 @login_manager.user_loader
 def cargar_usuario(usuarioid):
@@ -52,7 +52,6 @@ def main():
 	
 @app.route('/iniciar_sesion', methods=['POST'])
 def iniciar_sesion():
-	print(request)
 	usuario = models.Usuario.get(models.Usuario.correo**request.form['correo'])
 	if request.form['password'] == usuario.rpe:
 		login_user(usuario)
@@ -62,6 +61,7 @@ def iniciar_sesion():
 @app.route('/usuario')
 @login_required
 def get_usuario():
+	print(g.user.id)
 	return json.dumps(g.user._get_current_object().to_json())
 
 
@@ -79,7 +79,10 @@ def seleccionar_colegas():
 @app.route('/colegas')
 @login_required
 def colegas():
-	usuarios = models.Usuario.select().where(models.Usuario.departamento**g.user.departamento)
+	seleccionados = models.Evalua.select().where(models.Evalua.evaluado**g.user._get_current_object().id)
+	usuarios = models.Usuario.select().where(
+		(models.Usuario.departamento==g.user.departamento) &
+		(models.Usuario.id != g.user.id) )
 	colegas = list()
 	for usuario in usuarios:
 		colegas.append(usuario.to_json())
@@ -103,7 +106,6 @@ def puede_evaluarme():
 		evaluado=g.user._get_current_object(),
 		evaluador=get_modelo
 		)
-	print(models.Evalua.get(models.Evalua.evaluador**g.user._get_current_object()))
 	string = "{} ahora podra ser evaluada por {}".format(g.user.nombre, colega['nombre'])
 	return json.dumps({'response': string})
 
@@ -146,6 +148,7 @@ def get_competencias():
 	for competencia in competencias:
 		lista_competencias.append(competencia.to_json())
 
+	print("perfecto dog ya tienes las competencias")
 	print(lista_competencias)
 	return json.dumps(lista_competencias)
 
@@ -194,16 +197,28 @@ def inexistentes():
 def neutras():
 	respuesta = list()
 	resultados = list()
-	tipo = models.TipoCompetencia.get(models.TipoCompetencia.nombre ** peticion['tipo'])
+	peticion = request.get_json()
+	existente = models.TipoCompetencia.get(models.TipoCompetencia.nombre ** 'Existentes')
+	inexistente = models.TipoCompetencia.get(models.TipoCompetencia.nombre ** 'Inexistentes')
+
 	colega = models.Usuario.get(models.Usuario.nombre**peticion['colega']['nombre'])
-	evaluaciones = models.Evaluando.select().where(
+	evaluaciones_inexistentes = models.Evaluando.select().where(
 		(models.Evaluando.colega == colega) &
-		(models.Evaluando.tipo == tipo)
+		(models.Evaluando.tipo == inexistente)
 		)
-	for evaluacion in evaluaciones:
+	evaluaciones_existentes = models.Evaluando.select().where(
+		(models.Evaluando.colega == colega) &
+		(models.Evaluando.tipo == existente)
+		)
+	for evaluacion in evaluaciones_existentes:
 		resultados.append(models.Competencias.get(models.Competencias.id**evaluacion.competencia))
+
+	for evaluacion in evaluaciones_inexistentes:
+		resultados.append(models.Competencias.get(models.Competencias.id**evaluacion.competencia))	
+
 	for resultado in resultados:
 		respuesta.append(resultado.to_json())
+	
 	return json.dumps(respuesta)
 
 

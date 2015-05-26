@@ -1,13 +1,16 @@
 
 angular.module('Sistema-cfe', [])
     .controller('competenciasCtrl', function ($scope, $http) {
+
+
+      $scope.competencias = [];
     function get_existentes(){
       $scope.competencias_existentes = [];
       $http.post('/get_competencias/existentes', 
       { 
         colega : $scope.colega,
-        tipo : 'Existente'
-      }).success(function(response){
+        tipo : 'Existentes'
+      }).success(function (response){
         $scope.competencias_existentes = response;
       });
 
@@ -19,20 +22,42 @@ angular.module('Sistema-cfe', [])
       $http.post('/get_competencias/inexistentes', 
       { 
         colega : $scope.colega,
-        tipo : 'Inexistente'
-      }).success(function(response){
+        tipo : 'Inexistentes'
+      }).success(function (response){
         $scope.competencias_inexistentes = response;
 
       });
     }
-    
+    function get_neutras(){
+
+      $scope.competencias_neutras = [];
+      $http.post('/get_competencias/neutras', 
+      {
+        colega: $scope.colega,
+        tipo :'Neutras'
+
+      }).success(function (response) {
+        $scope.competencias_neutras = response; 
+        
+        for(i=0 ; i < $scope.competencias_neutras.length; i++){
+          for(j=0; j< $scope.competencias.length; j++){
+            if($scope.competencias_neutras[i].nombre==$scope.competencias[j].nombre){
+              $scope.competencias.splice(j,1);
+            }
+          }
+        }
+      });
+    }
     $http.get('/get_colegas_evaluar').success(function(response){
       $scope.colegas = response;
 
     });
     function getCompetencias(){
     $http.get('/get_competencias').success(function(response){
+
       $scope.competencias = response;
+
+
     });
   }
 
@@ -61,12 +86,10 @@ angular.module('Sistema-cfe', [])
     
     $scope.si = function(){
         var comp = $('h1').html();
-
-        alert(comp);
         $http.post('/evaluando', {
           colega : $scope.colega,
           competencia : $scope.competencia_actual,
-          tipo : 'Existente'
+          tipo : 'Existentes'
         }).success(function(response){
           console.log(response);
         });
@@ -79,11 +102,10 @@ angular.module('Sistema-cfe', [])
     
     $scope.no = function(){
         var comp = $('h1').html();
-        alert(comp);
         $http.post('/evaluando', {
           colega : $scope.colega,
           competencia : $scope.competencia_actual,
-          tipo : 'Inexistente'
+          tipo : 'Inexistentes'
         }).success(function(response){
           console.log(response);
         });
@@ -96,9 +118,12 @@ angular.module('Sistema-cfe', [])
 
     $scope.selectedValue = function(value){
       $scope.colega = value;
+
       getCompetencias();
       get_existentes(value);
       get_inexistentes(value);
+      get_neutras(value);
+
     }
 
     $scope.submit = function(event){
@@ -110,7 +135,6 @@ angular.module('Sistema-cfe', [])
         data = JSON.stringify(values);
         console.log(data);
         $http.post('/iniciar_sesion', values).success(function () {
-          alert('success');
         });   
     }
     
@@ -140,10 +164,11 @@ angular.module('Sistema-cfe', [])
 
 
   $scope.submit = function(colega){
+    var index = $scope.colegas.indexOf(colega);
     $http.post('/puede_evaluarme', colega).success(function(response){
-      evaluador = '#' +colega.rpe 
-      console.log(evaluador);
-      $scope.colegas.splice(colega.id,1);
+      evaluador = '#' +colega.rpe;
+      
+      $scope.colegas.splice(index, 1);
       $(evaluador).remove();
     });
   }
