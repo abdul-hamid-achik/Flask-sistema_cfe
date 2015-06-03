@@ -34,6 +34,7 @@ class Usuario(UserMixin, Model):
     	except IntegrityError:
     		raise ValueError("El usuario ya existe")
 
+
     def __repr__(self):
     	return '{}'.format(self.nombre)
 
@@ -60,7 +61,31 @@ class Usuario(UserMixin, Model):
     			Evalua, on=Evalua.evaluador).where(
     			Evalua.evaluado == self)
     		)
-    		
+    
+    def superiores(self):
+    	puesto = Jerarquia.get(Jerarquia.nombre**self.puesto)
+    	return (
+    		Usuario.get(Usuario.puesto**puesto.superior)
+    		)
+
+
+#
+#
+#sin tomar encuenta la zona o el departamento todavia
+#
+    def subordinados(self):
+    	puesto = Jerarquia.get(Jerarquia.superior**self.puesto)
+    	return (
+    			Usuario.get(Usuario.puesto**puesto.nombre)
+    		)
+
+#
+#
+#
+#superior = Jerarquia.get(Jerarquia.nombre**subgerente.puesto)
+#usuario = Usuario.select().where(Usuario.puesto==superior.nombre)
+#subgerente = usuario[0]
+#usuario = Usuario.get((Usuario.puesto**superior.superior))
 
 
 class Evalua(Model):
@@ -128,12 +153,26 @@ class Evaluando(Model):
 		except IntegrityError:
 			raise ValueError("ya se realizo esta evaluacion")
 
+
+class Jerarquia(Model):
+	nombre = CharField(max_length=100)
+	superior = CharField(max_length=100)
+
+	class Meta:
+		database = DATABASE
+
 def initialize():
     DATABASE.connect()
-    DATABASE.create_tables([Usuario, Evalua, Competencias, Evaluando, TipoCompetencia], safe=True)
+    DATABASE.create_tables([
+    	Usuario, 
+    	Evalua, 
+    	Competencias, 
+    	Evaluando, 
+    	TipoCompetencia,
+    	Jerarquia], safe=True)
     DATABASE.close()
 
 def drop():
 	DATABASE.connect()
-	DATABASE.drop_tables([Evalua, Evaluando], safe=True)
+	DATABASE.drop_tables([Jerarquia], safe=True)
 	DATABASE.close()

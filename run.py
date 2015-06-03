@@ -61,7 +61,6 @@ def iniciar_sesion():
 @app.route('/usuario')
 @login_required
 def get_usuario():
-	print(g.user.id)
 	return json.dumps(g.user._get_current_object().to_json())
 
 
@@ -147,9 +146,6 @@ def get_competencias():
 	lista_competencias = list()
 	for competencia in competencias:
 		lista_competencias.append(competencia.to_json())
-
-	print("perfecto dog ya tienes las competencias")
-	print(lista_competencias)
 	return json.dumps(lista_competencias)
 
 @app.route('/get_competencias/existentes', methods=['POST'])
