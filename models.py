@@ -15,7 +15,7 @@ class Usuario(UserMixin, Model):
     correo = CharField(unique=True)
     registro = DateTimeField(default=datetime.datetime.now)
     admin = BooleanField(default=False)
-   
+    zona = CharField(max_length=20)
     class Meta:
         database = DATABASE
         order_by = ('-registro',)
@@ -45,8 +45,9 @@ class Usuario(UserMixin, Model):
     	"puesto": self.puesto,
     	"departamento": self.departamento,
     	"correo": self.correo,
-    	"admin": self.admin
-    	}
+    	"admin": self.admin,
+    	"zona": self.zona
+     	}
 
     def evaluan(self):
     	return (
@@ -65,30 +66,28 @@ class Usuario(UserMixin, Model):
     def superiores(self):
     	puesto = Jerarquia.get(Jerarquia.nombre**self.puesto)
     	return (
-    		Usuario.get(Usuario.puesto**puesto.superior)
+    		Usuario.select().where(Usuario.puesto**puesto.superior)
     		)
 
-
-#
 #
 #sin tomar encuenta la zona o el departamento todavia
 #
+
     def subordinados(self):
     	puesto = Jerarquia.get(Jerarquia.superior**self.puesto)
     	return (
-    			Usuario.get(Usuario.puesto**puesto.nombre)
+    			Usuario.select().where(Usuario.puesto**puesto.nombre)
     		)
 
-#
-#
+
 #
 #superior = Jerarquia.get(Jerarquia.nombre**subgerente.puesto)
 #usuario = Usuario.select().where(Usuario.puesto==superior.nombre)
 #subgerente = usuario[0]
 #usuario = Usuario.get((Usuario.puesto**superior.superior))
+#
 
-
-class Evalua(Model):
+class PermisoEvaluar(Model):
 	evaluado = ForeignKeyField(Usuario, related_name='evaluado')
 	evaluador = ForeignKeyField(Usuario, related_name='evaluador')
 
@@ -165,7 +164,7 @@ def initialize():
     DATABASE.connect()
     DATABASE.create_tables([
     	Usuario, 
-    	Evalua, 
+    	PermisoEvaluar, 
     	Competencias, 
     	Evaluando, 
     	TipoCompetencia,
@@ -174,5 +173,5 @@ def initialize():
 
 def drop():
 	DATABASE.connect()
-	DATABASE.drop_tables([Jerarquia], safe=True)
+	DATABASE.drop_tables([Evalua], safe=True)
 	DATABASE.close()

@@ -78,7 +78,7 @@ def seleccionar_colegas():
 @app.route('/colegas')
 @login_required
 def colegas():
-	seleccionados = models.Evalua.select().where(models.Evalua.evaluado**g.user._get_current_object().id)
+	seleccionados = models.PermisoEvaluar.select().where(models.PermisoEvaluar.evaluado**g.user._get_current_object().id)
 	usuarios = models.Usuario.select().where(
 		(models.Usuario.departamento==g.user.departamento) &
 		(models.Usuario.id != g.user.id) )
@@ -101,7 +101,7 @@ def get_colegas():
 def puede_evaluarme():
 	colega = request.get_json()
 	get_modelo = models.Usuario.get(models.Usuario.nombre**colega['nombre'])
-	models.Evalua.create( 
+	models.PermisoEvaluar.create( 
 		evaluado=g.user._get_current_object(),
 		evaluador=get_modelo
 		)
