@@ -59,8 +59,7 @@ body{
   color: white;
 }
 
-#evaluar_colega{
-    margin-left: 35%;
+.evaluar_colega{
     overflow: auto;
     display: fixed;
     height:250px;
@@ -68,6 +67,18 @@ body{
     border: 1px solid rgb(40,100,200);
 }
 
-#evaluar_colega_btn{
-    margin-left:35%;
+.evaluar_colega_btn{
+}
+
+.wrapper{
+
+    margin-left: 7.5%;
+}
+
+.float-left{
+    float:left;
+    margin-right:2.5%;
+}
+.espaciador{
+    margin-left: 5.5%;
 }

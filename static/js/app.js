@@ -153,15 +153,44 @@ angular.module('Sistema-cfe', [])
 
       return output;
    }
+}).filter('ordenar', function (){
+  return function(string,key){
+    try {
+      var res = string.split(' ');
+      if (res.length > 3){
+        var output = res[res.length-2] + " " + res[res.length-1] +" " + res[0] + " " + res[1];
+      } 
+      else{
+        var output = res[res.length-1]+" " + res[1] + " " + res[2];
+      }
+      return output;
+    }
+    catch (err) {
+      console.log('');
+    }
+    return null;
+    
+  }
 }).controller('graficaCtrl', function($scope){
 
 
 }).controller('colegas', function($scope,$http,$window){
+  
+  $http.get('/usuario').success(function(response){
+    $scope.usuario = response;
+  });
+
   $http.get('/colegas').success(function(response){
     $scope.colegas =  response;
   });
 
+  $http.get('/get_superiores').success(function(response){
+    $scope.superiores =  response;
+  });
 
+  $http.get('/get_subordinados').success(function(response){
+    $scope.subordinados =  response;
+  });
 
   $scope.submit = function(colega){
     var index = $scope.colegas.indexOf(colega);
@@ -171,6 +200,8 @@ angular.module('Sistema-cfe', [])
       $scope.colegas.splice(index, 1);
       $(evaluador).remove();
     });
+
+
   }
   $scope.continuar = function(){
     $window.location.href = '/sistema';

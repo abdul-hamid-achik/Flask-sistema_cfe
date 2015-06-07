@@ -69,6 +69,12 @@ def get_usuario():
 def sistema():
 	return make_response(open('templates/sistema.html').read())
 
+
+
+####
+####    seleccionar a los que te permitiran evaluarlos
+####
+
 @app.route('/seleccionar_colegas')
 @login_required
 def seleccionar_colegas():
@@ -78,9 +84,8 @@ def seleccionar_colegas():
 @app.route('/colegas')
 @login_required
 def colegas():
-	seleccionados = models.PermisoEvaluar.select().where(models.PermisoEvaluar.evaluado**g.user._get_current_object().id)
 	usuarios = models.Usuario.select().where(
-		(models.Usuario.departamento==g.user.departamento) &
+		(models.Usuario.puesto==g.user.puesto) &
 		(models.Usuario.id != g.user.id) )
 	colegas = list()
 	for usuario in usuarios:
@@ -95,6 +100,24 @@ def get_colegas():
 	for evaluador in evaluadores.evaluan():
 		colegas.append(evaluador.to_json())
 	return json.dumps(colegas)
+
+@app.route('/get_subordinados')
+@login_required
+def get_subordinados():
+	usuario = g.user._get_current_object()
+	subordinados = list()
+	for subordinado in usuario.subordinados():
+		subordinados.append(subordinado.to_json())
+	return json.dumps(subordinados)
+
+@app.route('/get_superiores')
+@login_required
+def get_superiores():
+	usuario = g.user._get_current_object()
+	superiores = list()
+	for superior in usuario.superiores():
+		superiores.append(superior.to_json())
+	return json.dumps(superiores)
 
 @app.route('/puede_evaluarme', methods=['POST'])
 @login_required
