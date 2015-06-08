@@ -13,7 +13,7 @@ body{
 
 .cuadro ul li {
     font-size: 0.875em;
-    
+
 }
 
 #competencia-menu{
@@ -23,7 +23,7 @@ body{
 }
 
 #empleados-menu{
-    
+
     padding: 45px 0 45px 25px;
     display: inline-block;
     width:30%;
@@ -76,9 +76,40 @@ body{
 }
 
 .float-left{
+    margin-top:-20px;
     float:left;
-    margin-right:2.5%;
+    margin-right:5.5%;
 }
 .espaciador{
     margin-left: 5.5%;
+}
+
+.evaluacion_redonda{
+    padding:7.5%;
+    text-align:center;
+    width:90%;
+}
+
+.superiores-seleccionados ul,
+.subordinados-seleccionados ul,
+.colegas_izq-seleccionados ul,
+.colegas_der-seleccionados ul{
+    list-style:none;
+}
+.superiores-seleccionados{
+
+}
+.subordinados-seleccionados{
+}
+.colegas_izq-seleccionados{
+    float:left;
+    display:fixed;
+}
+.colegas_der-seleccionados{
+    float:right;
+    display:fixed;
+}
+
+.usuario_actual{
+    margin-bottom:10px;
 }

@@ -6,21 +6,21 @@ angular.module('Sistema-cfe', [])
       $scope.competencias = [];
     function get_existentes(){
       $scope.competencias_existentes = [];
-      $http.post('/get_competencias/existentes', 
-      { 
+      $http.post('/get_competencias/existentes',
+      {
         colega : $scope.colega,
         tipo : 'Existentes'
       }).success(function (response){
         $scope.competencias_existentes = response;
       });
 
-     
+
     }
 
     function get_inexistentes(){
       $scope.competencias_inexistentes = [];
-      $http.post('/get_competencias/inexistentes', 
-      { 
+      $http.post('/get_competencias/inexistentes',
+      {
         colega : $scope.colega,
         tipo : 'Inexistentes'
       }).success(function (response){
@@ -31,14 +31,14 @@ angular.module('Sistema-cfe', [])
     function get_neutras(){
 
       $scope.competencias_neutras = [];
-      $http.post('/get_competencias/neutras', 
+      $http.post('/get_competencias/neutras',
       {
         colega: $scope.colega,
         tipo :'Neutras'
 
       }).success(function (response) {
-        $scope.competencias_neutras = response; 
-        
+        $scope.competencias_neutras = response;
+
         for(i=0 ; i < $scope.competencias_neutras.length; i++){
           for(j=0; j< $scope.competencias.length; j++){
             if($scope.competencias_neutras[i].nombre==$scope.competencias[j].nombre){
@@ -64,14 +64,14 @@ angular.module('Sistema-cfe', [])
     $http.get('/usuario').success(function(response){
       $scope.usuario = response;
     })
-    
+
     function borrarTitulo(guardar){
             guardar = guardar || "Competencias";
          $('#competencia-menu h1').empty();
-         $('#competencia-menu h1').append(guardar);
+         $('#competencia-menu h1').push(guardar);
     }
 
-    $scope.remove = function($index) { 
+    $scope.remove = function($index) {
       var guardar = $scope.competencias[$index];
       if ($scope.colega == null){
         alert('Selecciona a un colega para evaluar primero!');
@@ -83,7 +83,7 @@ angular.module('Sistema-cfe', [])
           borrarTitulo(guardar.nombre);
       }
     }
-    
+
     $scope.si = function(){
         var comp = $('h1').html();
         $http.post('/evaluando', {
@@ -98,8 +98,8 @@ angular.module('Sistema-cfe', [])
         borrarTitulo()
         get_existentes();
     }
-    
-    
+
+
     $scope.no = function(){
         var comp = $('h1').html();
         $http.post('/evaluando', {
@@ -113,7 +113,7 @@ angular.module('Sistema-cfe', [])
         $scope.competencias_inexistentes.push(comp);
         borrarTitulo()
         get_inexistentes();
-        
+
     }
 
     $scope.selectedValue = function(value){
@@ -135,12 +135,12 @@ angular.module('Sistema-cfe', [])
         data = JSON.stringify(values);
         console.log(data);
         $http.post('/iniciar_sesion', values).success(function () {
-        });   
+        });
     }
-    
+
 }).filter('unique', function() {
    return function(collection, keyname) {
-      var output = [], 
+      var output = [],
           keys = [];
 
       angular.forEach(collection, function(item) {
@@ -159,7 +159,7 @@ angular.module('Sistema-cfe', [])
       var res = string.split(' ');
       if (res.length > 3){
         var output = res[res.length-2] + " " + res[res.length-1] +" " + res[0] + " " + res[1];
-      } 
+      }
       else{
         var output = res[res.length-1]+" " + res[1] + " " + res[2];
       }
@@ -169,13 +169,13 @@ angular.module('Sistema-cfe', [])
       console.log('');
     }
     return null;
-    
+
   }
 }).controller('graficaCtrl', function($scope){
 
 
 }).controller('colegas', function($scope,$http,$window){
-  
+
   $http.get('/usuario').success(function(response){
     $scope.usuario = response;
   });
@@ -192,17 +192,55 @@ angular.module('Sistema-cfe', [])
     $scope.subordinados =  response;
   });
 
-  $scope.submit = function(colega){
-    var index = $scope.colegas.indexOf(colega);
-    $http.post('/puede_evaluarme', colega).success(function(response){
-      evaluador = '#' +colega.rpe;
-      
-      $scope.colegas.splice(index, 1);
-      $(evaluador).remove();
-    });
+  $scope.superiores_seleccionados = [];
+  $scope.subordinados_seleccionados = [];
+  $scope.colegas_izq=[];
+  $scope.colegas_der=[];
+//corregir esto
+  $scope.submit = function(colega, tipo){
+    switch(tipo){
 
+      case "colega":
+        var index = $scope.colegas.indexOf(colega);
+        $http.post('/puede_evaluarme', colega).success(function(response){
+          evaluador = '#' +colega.rpe;
+
+          $scope.colegas.splice(index, 1);
+          if($scope.colegas_izq.length<3){
+            $scope.colegas_izq.push(colega);
+          }
+          else{
+            $scope.colegas_der.push(colega);
+          }
+          $(evaluador).remove();
+        });
+        break;
+
+      case "superior":
+        var index = $scope.superiores.indexOf(colega);
+        $http.post('/puede_evaluarme', colega).success(function(response){
+          evaluador = '#' +colega.rpe;
+
+          $scope.superiores.splice(index, 1);
+          $scope.superiores_seleccionados.push(colega);
+          $(evaluador).remove();
+        });
+        break;
+
+      case "subordinado":
+        var index = $scope.subordinados.indexOf(colega);
+        $http.post('/puede_evaluarme', colega).success(function(response){
+          evaluador = '#' +colega.rpe;
+
+          $scope.subordinados.splice(index, 1);
+          $scope.subordinados_seleccionados.push(colega);
+          $(evaluador).remove();
+        });
+        break;
+  }
 
   }
+
   $scope.continuar = function(){
     $window.location.href = '/sistema';
   }

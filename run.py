@@ -33,9 +33,9 @@ def antes_request():
 	g.db = models.DATABASE
 	g.db.connect()
 	g.user = current_user
-	
 
-	
+
+
 @app.after_request
 def despues_request(response):
 	"""Cerrar la conexion despues de cada request"""
@@ -49,7 +49,7 @@ def main():
 	#return make_response(open('templates/index.html').read())
 	return render_template('index.html')
 
-	
+
 @app.route('/iniciar_sesion', methods=['POST'])
 def iniciar_sesion():
 	usuario = models.Usuario.get(models.Usuario.correo**request.form['correo'])
@@ -90,7 +90,7 @@ def colegas():
 	colegas = list()
 	for usuario in usuarios:
 		colegas.append(usuario.to_json())
-	return json.dumps(colegas) 
+	return json.dumps(colegas)
 
 @app.route('/get_colegas_evaluar')
 @login_required
@@ -124,7 +124,7 @@ def get_superiores():
 def puede_evaluarme():
 	colega = request.get_json()
 	get_modelo = models.Usuario.get(models.Usuario.nombre**colega['nombre'])
-	models.PermisoEvaluar.create( 
+	models.PermisoEvaluar.create(
 		evaluado=g.user._get_current_object(),
 		evaluador=get_modelo
 		)
@@ -148,9 +148,9 @@ def evaluando():
 		)
 
 	return json.dumps(
-		{ 
+		{
 		"response" : "{} evaluo a {} decidiendo que la competencia: {} es {}".format(
-			usuario.nombre, colega.nombre, competencia.nombre, tipo.nombre) 
+			usuario.nombre, colega.nombre, competencia.nombre, tipo.nombre)
 		}
 	)
 
@@ -161,6 +161,7 @@ def cerrar_sesion():
 	logout_user()
 	flash('Haz salido de la sesion exitosamente!', 'success')
 	return redirect(url_for('main'))
+
 
 @app.route('/get_competencias')
 @login_required
@@ -177,7 +178,7 @@ def existentes():
 	respuesta = list()
 	resultados = list()
 	peticion = request.get_json()
-	empleado = g.user._get_current_object() 
+	empleado = g.user._get_current_object()
 	tipo = models.TipoCompetencia.get(models.TipoCompetencia.nombre ** peticion['tipo'])
 	colega = models.Usuario.get(models.Usuario.nombre**peticion['colega']['nombre'])
 	evaluaciones = models.Evaluando.select().where(
@@ -197,7 +198,7 @@ def inexistentes():
 	respuesta = list()
 	resultados = list()
 	peticion = request.get_json()
-	empleado = g.user._get_current_object() 
+	empleado = g.user._get_current_object()
 	tipo = models.TipoCompetencia.get(models.TipoCompetencia.nombre ** peticion['tipo'])
 	colega = models.Usuario.get(models.Usuario.nombre**peticion['colega']['nombre'])
 	evaluaciones = models.Evaluando.select().where(
@@ -233,18 +234,18 @@ def neutras():
 		resultados.append(models.Competencias.get(models.Competencias.id**evaluacion.competencia))
 
 	for evaluacion in evaluaciones_inexistentes:
-		resultados.append(models.Competencias.get(models.Competencias.id**evaluacion.competencia))	
+		resultados.append(models.Competencias.get(models.Competencias.id**evaluacion.competencia))
 
 	for resultado in resultados:
 		respuesta.append(resultado.to_json())
-	
+
 	return json.dumps(respuesta)
 
 
 if __name__ == '__main__':
 	models.initialize()
 	app.run(
-    	debug=DEBUG, 
-    	port=PORT, 
+    	debug=DEBUG,
+    	port=PORT,
     	host=HOST
     )

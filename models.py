@@ -29,7 +29,7 @@ class Usuario(UserMixin, Model):
 	    		puesto=puesto,
 	    		departamento=departamento,
 	    		correo=correo,
-	    		admin=admin	    		
+	    		admin=admin
 	    	)
     	except IntegrityError:
     		raise ValueError("El usuario ya existe")
@@ -39,7 +39,7 @@ class Usuario(UserMixin, Model):
     	return '{}'.format(self.nombre)
 
     def to_json(self):
-    	return { 
+    	return {
     	"rpe" : self.rpe,
     	"nombre" : self.nombre,
     	"puesto": self.puesto,
@@ -62,7 +62,7 @@ class Usuario(UserMixin, Model):
     			Evalua, on=Evalua.evaluador).where(
     			Evalua.evaluado == self)
     		)
-    
+
     def superiores(self):
     	puesto = Jerarquia.get(Jerarquia.nombre**self.puesto)
     	return (
@@ -109,9 +109,9 @@ class Competencias(Model):
 		}
 
 	def __repr__(self):
-		return self.nombre	
+		return self.nombre
 
-	
+
 
 class TipoCompetencia(Model):
 	nombre = CharField(max_length=50)
@@ -124,9 +124,9 @@ class TipoCompetencia(Model):
 		}
 
 	def __repr__(self):
-		return self.nombre	
+		return self.nombre
 
-	
+
 
 class Evaluando(Model):
 	empleado = ForeignKeyField(Usuario, related_name='empleado')
@@ -163,15 +163,15 @@ class Jerarquia(Model):
 def initialize():
     DATABASE.connect()
     DATABASE.create_tables([
-    	Usuario, 
-    	PermisoEvaluar, 
-    	Competencias, 
-    	Evaluando, 
+    	Usuario,
+    	PermisoEvaluar,
+    	Competencias,
+    	Evaluando,
     	TipoCompetencia,
     	Jerarquia], safe=True)
     DATABASE.close()
 
 def drop():
 	DATABASE.connect()
-	DATABASE.drop_tables([Evalua], safe=True)
+	DATABASE.drop_tables([Usuario], safe=True)
 	DATABASE.close()

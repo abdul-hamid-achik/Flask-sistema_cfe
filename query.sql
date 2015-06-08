@@ -68,13 +68,13 @@ insert into competencias(nombre) values ("Tiene Una Buena Relación Con Su Jefe"
 
 insert into jerarquia(nombre, superior) values('Gerente', '');
 insert into jerarquia(nombre, superior) values('Subgerente', 'Gerente');
-insert into jerarquia(nombre, superior) values('Jefe de Dpto', 'Subgerente');
-insert into jerarquia(nombre, superior) values('Jefe de oficina', 'Jefe de Dpto');
+insert into jerarquia(nombre, superior) values('Jefe de departamento', 'Subgerente');
+insert into jerarquia(nombre, superior) values('Jefe de oficina', 'Jefe de departamento');
 insert into jerarquia(nombre, superior) values('Supervisor', 'Jefe de oficina');
 insert into jerarquia(nombre, superior) values('Superintendente', 'Gerente');
-insert into jerarquia(nombre, superior) values('Jefe de Dpto', 'Superintendente');
+insert into jerarquia(nombre, superior) values('Jefe de departamento', 'Superintendente');
 insert into jerarquia(nombre, superior) values('Administrador', 'Superintendente');
-insert into jerarquia(nombre, superior) values('Jefe de oficina', 'Jefe de Dpto');
+insert into jerarquia(nombre, superior) values('Jefe de oficina', 'Jefe de departamento');
 
 
 
