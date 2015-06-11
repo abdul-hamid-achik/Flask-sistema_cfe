@@ -131,6 +131,19 @@ def puede_evaluarme():
 	string = "{} ahora podra ser evaluada por {}".format(g.user.nombre, colega['nombre'])
 	return json.dumps({'response': string})
 
+@app.route('/numero_evaluadores')
+@login_required
+def numero_evaluadores():
+	numero = models.PermisoEvaluar.select().where(models.PermisoEvaluar.evaluado==g.user._get_current_object()).count()
+	ids = models.PermisoEvaluar.select().where(models.PermisoEvaluar.evaluado==g.user._get_current_object())
+
+	lista_ids = list()
+	for Id in ids:
+		lista_ids.append(Id.evaluador.rpe)
+	return json.dumps({
+	                  "cantidad": numero,
+	                  "seleccionados": lista_ids,
+	                  })
 
 @app.route('/evaluando', methods=['POST'])
 @login_required

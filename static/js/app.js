@@ -171,11 +171,28 @@ angular.module('Sistema-cfe', [])
     return null;
 
   }
-}).controller('graficaCtrl', function($scope){
-
-
 }).controller('colegas', function($scope,$http,$window){
 
+  function buscarColega(seleccionado, lista){
+
+
+        console.log(lista);
+      for(i = 0; i <= lista.length; i++){
+
+        if(seleccionado==lista[i]){
+          alert(lista[i]);
+          lista.split(i,1);
+        }else{
+          console.log(seleccionado);
+          console.log(lista);
+        }
+      }
+  }
+
+  $http.get('/numero_evaluadores').success(function(response){
+    $scope.seleccionados = response.seleccionados;
+
+  });
   $http.get('/usuario').success(function(response){
     $scope.usuario = response;
   });
@@ -185,18 +202,30 @@ angular.module('Sistema-cfe', [])
   });
 
   $http.get('/get_superiores').success(function(response){
-    $scope.superiores =  response;
+
+    $scope.superiores = response;
+      for(j=0; j<$scope.seleccionados.length;j++){
+        buscarColega($scope.seleccionados[j], $scope.superiores);
+       }
+
+
   });
 
   $http.get('/get_subordinados').success(function(response){
+
     $scope.subordinados =  response;
+
   });
+  $http.get('/numero_evaluadores').success(function(response){
+      $scope.suma = response.cantidad;
+    });
 
   $scope.superiores_seleccionados = [];
   $scope.subordinados_seleccionados = [];
   $scope.colegas_izq=[];
   $scope.colegas_der=[];
 //corregir esto
+
   $scope.submit = function(colega, tipo){
     switch(tipo){
 
@@ -204,7 +233,6 @@ angular.module('Sistema-cfe', [])
         var index = $scope.colegas.indexOf(colega);
         $http.post('/puede_evaluarme', colega).success(function(response){
           evaluador = '#' +colega.rpe;
-
           $scope.colegas.splice(index, 1);
           if($scope.colegas_izq.length<3){
             $scope.colegas_izq.push(colega);
@@ -214,13 +242,13 @@ angular.module('Sistema-cfe', [])
           }
           $(evaluador).remove();
         });
+
         break;
 
       case "superior":
         var index = $scope.superiores.indexOf(colega);
         $http.post('/puede_evaluarme', colega).success(function(response){
           evaluador = '#' +colega.rpe;
-
           $scope.superiores.splice(index, 1);
           $scope.superiores_seleccionados.push(colega);
           $(evaluador).remove();
@@ -231,18 +259,28 @@ angular.module('Sistema-cfe', [])
         var index = $scope.subordinados.indexOf(colega);
         $http.post('/puede_evaluarme', colega).success(function(response){
           evaluador = '#' +colega.rpe;
-
           $scope.subordinados.splice(index, 1);
           $scope.subordinados_seleccionados.push(colega);
           $(evaluador).remove();
         });
+
+    buscarColega('80960', $scope.subordinados);
         break;
   }
 
   }
 
   $scope.continuar = function(){
-    $window.location.href = '/sistema';
+    //if ($scope.suma >= 10 ){
+
+      $window.location.href = '/sistema';
+
+    //}
+    //else {
+    //  var resultado = 10 - $scope.suma;
+    //  console.log(resultado);
+    //  alert("te falta seleccionar: " + resultado + " para continuar.");
+   // }
   }
 
 });
