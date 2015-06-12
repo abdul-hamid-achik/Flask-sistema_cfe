@@ -1,14 +1,24 @@
 body{
     overflow: auto;
 }
+.wrapper{
+    width:80%; 
 
+}
+.seleccionar_colegas {
+
+}
+.espaciado_arriba{
+    margin-top: 50px; 
+}
 .cuadro{
     display:fixed;
-    width: 33.33%;
+    width: 30%;
+    margin: 0% 1.66666666667%;
     float:left;
     height: 350px;
     overflow: auto;
-    border: 1px solid rgb(40,100,200);
+    border: 1px solid rgb(176,176,176);
 }
 
 .cuadro ul li {
@@ -18,8 +28,7 @@ body{
 
 #competencia-menu{
     display: inline-block;
-    float:left;
-    width: 70%;
+    
 }
 
 #empleados-menu{
@@ -34,7 +43,9 @@ body{
     padding:5px 5px 5px 15px;
     list-style:none;
 }
-
+#competencia-descripcion {
+    padding: 20px;
+}
 .competencias_cuadro_titulo{
     margin-top: 1px;
     text-align: center;
@@ -50,21 +61,12 @@ body{
 
 }
 
-.chart div {
-  font: 10px sans-serif;
-  background-color: steelblue;
-  text-align: right;
-  padding: 3px;
-  margin: 1px;
-  color: white;
-}
-
 .evaluar_colega{
     overflow: auto;
     display: fixed;
     height:250px;
     width:300px;
-    border: 1px solid rgb(40,100,200);
+    border: 1px solid rgb(176,176,176)  ;
 }
 
 .evaluar_colega_btn{
@@ -112,4 +114,8 @@ body{
 
 .usuario_actual{
     margin-bottom:10px;
+}
+
+#resultados {
+    margin: 1.66666666667%;
 }

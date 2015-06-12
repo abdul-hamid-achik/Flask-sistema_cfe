@@ -65,10 +65,12 @@ angular.module('Sistema-cfe', [])
       $scope.usuario = response;
     })
 
-    function borrarTitulo(guardar){
+    function borrarTitulo(guardar, descripcion){
             guardar = guardar || "Competencias";
          $('#competencia-menu h1').empty();
-         $('#competencia-menu h1').push(guardar);
+         $('#competencia-descripcion p').empty();
+         $('#competencia-menu h1').html(guardar);
+         $('#competencia-descripcion p').html(descripcion)
     }
 
     $scope.remove = function($index) {
@@ -80,7 +82,7 @@ angular.module('Sistema-cfe', [])
       else{
         $scope.competencia_actual = guardar;
         $scope.competencias.splice($index, 1);
-          borrarTitulo(guardar.nombre);
+          borrarTitulo(guardar.nombre, guardar.descripcion);
       }
     }
 
@@ -95,8 +97,8 @@ angular.module('Sistema-cfe', [])
         });
 
         $scope.competencias_existentes.push(comp);
-        borrarTitulo()
-        get_existentes();
+        borrarTitulo();
+                get_existentes();
     }
 
 
@@ -137,6 +139,13 @@ angular.module('Sistema-cfe', [])
         $http.post('/iniciar_sesion', values).success(function () {
         });
     }
+     $scope.reportes = function(){
+
+
+      $window.location.href = '/reporte';
+
+  
+  }
 
 }).filter('unique', function() {
    return function(collection, keyname) {
@@ -173,20 +182,46 @@ angular.module('Sistema-cfe', [])
   }
 }).controller('colegas', function($scope,$http,$window){
 
-  function buscarColega(seleccionado, lista){
-
-
-        console.log(lista);
+  function buscarColega(seleccionado, lista, caso){
+      console.log('buscar colega');
       for(i = 0; i <= lista.length; i++){
+      try{
+        if(seleccionado==lista[i].rpe){
+            switch(caso){
+              case "Colegas":
+              try{
+                  var index = $scope.colegas.indexOf(lista[i]);
+                  if($scope.colegas_izq.length<3){
+                    $scope.colegas_izq.push(lista[i]);
+                  }
+                  else{
+                    $scope.colegas_der.push(lista[i]);
+                  }
 
-        if(seleccionado==lista[i]){
-          alert(lista[i]);
-          lista.split(i,1);
-        }else{
-          console.log(seleccionado);
-          console.log(lista);
-        }
+                  $scope.colega.splice(index,1);
+                }
+                catch(err){
+                }
+              break;
+
+              case "Subordinados":
+                  $scope.subordinados_seleccionados.push(lista[i]);
+                  var index = $scope.subordinados.indexOf(lista[i]);
+                  $scope.subordinados.splice(index,1);
+              break;
+
+              case "Superiores":
+                  $scope.superiores_seleccionados.push(lista[i]);
+                  var index = $scope.superiores.indexOf(lista[i]);
+                  $scope.superiores.splice(index,1);
+              break;
+
+            }
+          }
       }
+      catch(err){
+      }
+    }
   }
 
   $http.get('/numero_evaluadores').success(function(response){
@@ -199,13 +234,16 @@ angular.module('Sistema-cfe', [])
 
   $http.get('/colegas').success(function(response){
     $scope.colegas =  response;
+    for(j=0; j<$scope.seleccionados.length;j++){
+        buscarColega($scope.seleccionados[j], $scope.colegas,"Colegas");
+       }
   });
 
   $http.get('/get_superiores').success(function(response){
 
     $scope.superiores = response;
       for(j=0; j<$scope.seleccionados.length;j++){
-        buscarColega($scope.seleccionados[j], $scope.superiores);
+        buscarColega($scope.seleccionados[j], $scope.superiores, "Superiores");
        }
 
 
@@ -214,6 +252,9 @@ angular.module('Sistema-cfe', [])
   $http.get('/get_subordinados').success(function(response){
 
     $scope.subordinados =  response;
+    for(j=0; j<$scope.seleccionados.length;j++){
+        buscarColega($scope.seleccionados[j], $scope.subordinados, "Subordinados");
+       }
 
   });
   $http.get('/numero_evaluadores').success(function(response){
@@ -224,7 +265,6 @@ angular.module('Sistema-cfe', [])
   $scope.subordinados_seleccionados = [];
   $scope.colegas_izq=[];
   $scope.colegas_der=[];
-//corregir esto
 
   $scope.submit = function(colega, tipo){
     switch(tipo){
@@ -263,19 +303,18 @@ angular.module('Sistema-cfe', [])
           $scope.subordinados_seleccionados.push(colega);
           $(evaluador).remove();
         });
-
-    buscarColega('80960', $scope.subordinados);
         break;
   }
 
   }
 
   $scope.continuar = function(){
-    //if ($scope.suma >= 10 ){
+    alert($scope.suma);
+   if ($scope.suma >= 9 ){
 
       $window.location.href = '/sistema';
 
-    //}
+   }
     //else {
     //  var resultado = 10 - $scope.suma;
     //  console.log(resultado);

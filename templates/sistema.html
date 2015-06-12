@@ -11,20 +11,25 @@
         <script src="/static/js/app.js"></script>
     </head>
 
-    <body ng-app="Sistema-cfe">
-<div id="wrapper">
+<body ng-app="Sistema-cfe">
+<div class="wrapper">
     <div ng-controller="competenciasCtrl">
-            <div id="competencia-menu">
+        <div class="row">
+            <div id="competencia-menu" class="col-md-4">
                 <h1>Competencias</h1>
-                <button ng-click="si()">Si tiene esta competencia</button>
-                <button ng-click="no()">No tiene esta competencia</button>
+                <button ng-click="si()">Si</button>
+                <button ng-click="no()">No</button>
             </div>
-            <div id="empleados-menu">
+            <div class="col-md-4" id="competencia-descripcion"> 
+                <p>{{ competencia_actual.descripcion }}</p>
+            </div>
+            <div id="empleados-menu" class="col-md-4">
                 <p style="display:inline">Evaluando a: </p>
                 <select id="empleados" ng-model="colega_seleccionado" ng-options="colega.nombre for colega in colegas" ng-change="selectedValue(colega_seleccionado)">
                     <option value="" disabled>Seleccione a alguien</option>
                 </select>
             </div>
+        </div>
             <div class="cuadro" id="izq">
                 <h2 class="competencias_cuadro_titulo">Competencias Existentes: {{ competencias_existentes.length}}</h2>
                 <ul class="competencias_lista" id="izq-ls">
@@ -48,13 +53,9 @@
             </div>
         </div>
         <div id="resultados">
-            <h2> Bienvenido {{ usuarios.nombre }} </h2>
-            <h3>Falta de evaluar</h3>
-            <div class="chart" ng-controller="graficaCtrl">
-                <div ng-repeat="usuario in usuarios.usuarios" style="width: {{ usuario.competencias.neutras.length + (usuario.competencias.existentes.length*5) + (usuario.competencias.inexistentes.length*5)}}px;">{{usuario.nombre}}</div>
             <button>Enviar resultados</button>
-    </div>
-</div>
+            </div>
+        </div>
       <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
     </body>
 </html>

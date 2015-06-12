@@ -52,8 +52,8 @@ class Usuario(UserMixin, Model):
     def evaluan(self):
         return (
             Usuario.select().join(
-                Evalua, on=Evalua.evaluado).where(
-                Evalua.evaluador == self)
+                PermisoEvaluar, on=PermisoEvaluar.evaluado).where(
+                PermisoEvaluar.evaluador == self)
         )
 
     def evalua(self):
@@ -106,13 +106,15 @@ class PermisoEvaluar(Model):
 
 class Competencias(Model):
     nombre = CharField(max_length=100)
+    descripcion = CharField(max_length=500)
 
     class Meta:
         database = DATABASE
 
     def to_json(self):
         return {
-        "nombre" : self.nombre
+        "nombre" : self.nombre,
+        "descripcion" : self.descripcion
         }
 
     def __repr__(self):
