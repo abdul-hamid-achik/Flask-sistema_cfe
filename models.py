@@ -149,6 +149,14 @@ class Evaluando(Model):
             (('empleado','colega', 'tipo', 'competencia'), True),
         )
 
+    def to_json(self):
+        return {
+        "evaluador":self.empleado,
+        "evaluado": self.colega,
+        "competencia": self.competencia,
+        "tipo": self.tipo
+        }
+
     @classmethod
     def nuevo(cls, empleado, colega, competencia, tipo):
         try:
@@ -160,6 +168,8 @@ class Evaluando(Model):
                 )
         except IntegrityError:
             raise ValueError("ya se realizo esta evaluacion")
+
+
 
 
 class Jerarquia(Model):
@@ -182,5 +192,5 @@ def initialize():
 
 def drop():
     DATABASE.connect()
-    DATABASE.drop_tables([Usuario], safe=True)
+    DATABASE.drop_tables([Competencias,PermisoEvaluar], safe=True)
     DATABASE.close()

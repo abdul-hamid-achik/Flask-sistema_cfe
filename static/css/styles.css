@@ -1,15 +1,21 @@
 body{
     overflow: auto;
 }
+.fondo{
+    background: #C8C8C8;
+    height: 1000px;
+}
 .wrapper{
-    width:80%; 
+    width:80%;
+    background: white;
+    margin-left: 7.5%;
+    height:900px;
+    box-shadow: 10px 10px 5px #888888;
 
 }
 .seleccionar_colegas {
 
-}
-.espaciado_arriba{
-    margin-top: 50px; 
+
 }
 .cuadro{
     display:fixed;
@@ -28,7 +34,7 @@ body{
 
 #competencia-menu{
     display: inline-block;
-    
+
 }
 
 #empleados-menu{
@@ -65,31 +71,36 @@ body{
     overflow: auto;
     display: fixed;
     height:250px;
-    width:300px;
+    width:250px;
     border: 1px solid rgb(176,176,176)  ;
 }
 
 .evaluar_colega_btn{
 }
 
-.wrapper{
 
-    margin-left: 7.5%;
+.barra-menu{
+    margin-left:2%;
 }
 
 .float-left{
-    margin-top:-20px;
+    margin-top:-10px;
     float:left;
     margin-right:5.5%;
 }
 .espaciador{
-    margin-left: 5.5%;
+    margin-top:5.5%;
+    margin-left: 13.5%;
+
 }
 
 .evaluacion_redonda{
-    padding:7.5%;
+    margin-left:5.5%;
+    padding:10% 7.5%;
     text-align:center;
     width:90%;
+    margin-bottom:20px;
+    border: 1px solid rgb(176,176,176);
 }
 
 .superiores-seleccionados ul,

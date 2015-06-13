@@ -142,9 +142,9 @@ angular.module('Sistema-cfe', [])
      $scope.reportes = function(){
 
 
-      $window.location.href = '/reporte';
+      $window.location.href = '/resultados';
 
-  
+
   }
 
 }).filter('unique', function() {
@@ -310,7 +310,7 @@ angular.module('Sistema-cfe', [])
 
   $scope.continuar = function(){
     alert($scope.suma);
-   if ($scope.suma >= 9 ){
+   if ($scope.suma > 9 ){
 
       $window.location.href = '/sistema';
 
@@ -321,6 +321,13 @@ angular.module('Sistema-cfe', [])
     //  alert("te falta seleccionar: " + resultado + " para continuar.");
    // }
   }
+
+}).controller('reporte', function($scope,$http,$window)
+{
+  $http.get('/reporte').success(function(response){
+    $scope.datos = response;
+  });
+
 
 });
 

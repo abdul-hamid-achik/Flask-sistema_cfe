@@ -61,6 +61,11 @@ insert into competencias(nombre, descripcion) values ("Tiene Una Buena Relación
 
 
 
+insert into tipocompetencia(nombre) values ('Existentes');
+
+insert into tipocompetencia(nombre) values ('Inexistentes');
+
+insert into tipocompetencia(nombre) values ('Neutras');
 
 
 

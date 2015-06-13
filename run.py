@@ -195,6 +195,7 @@ def existentes():
 	tipo = models.TipoCompetencia.get(models.TipoCompetencia.nombre ** peticion['tipo'])
 	colega = models.Usuario.get(models.Usuario.nombre**peticion['colega']['nombre'])
 	evaluaciones = models.Evaluando.select().where(
+	    (models.Evaluando.empleado == g.user._get_current_object()) &
 		(models.Evaluando.colega == colega) &
 		(models.Evaluando.tipo == tipo)
 		)
@@ -215,6 +216,7 @@ def inexistentes():
 	tipo = models.TipoCompetencia.get(models.TipoCompetencia.nombre ** peticion['tipo'])
 	colega = models.Usuario.get(models.Usuario.nombre**peticion['colega']['nombre'])
 	evaluaciones = models.Evaluando.select().where(
+	    (models.Evaluando.empleado == g.user._get_current_object()) &
 		(models.Evaluando.colega == colega) &
 		(models.Evaluando.tipo == tipo)
 		)
@@ -236,10 +238,12 @@ def neutras():
 
 	colega = models.Usuario.get(models.Usuario.nombre**peticion['colega']['nombre'])
 	evaluaciones_inexistentes = models.Evaluando.select().where(
+	    (models.Evaluando.empleado == g.user._get_current_object()) &
 		(models.Evaluando.colega == colega) &
 		(models.Evaluando.tipo == inexistente)
 		)
 	evaluaciones_existentes = models.Evaluando.select().where(
+	    (models.Evaluando.empleado == g.user._get_current_object()) &
 		(models.Evaluando.colega == colega) &
 		(models.Evaluando.tipo == existente)
 		)
@@ -254,7 +258,42 @@ def neutras():
 
 	return json.dumps(respuesta)
 
+@app.route('/reporte')
+@login_required
+def reporte():
+	datos = models.Evaluando.select().where(models.Evaluando.colega == g.user._get_current_object())
 
+	comp = models.Evaluando.select(models.Evaluando.competencia,
+	                               models.Evaluando.tipo).where(
+	                               models.Evaluando.colega == g.user._get_current_object())
+	print(comp)
+	for competencia in comp:
+		competencias = models.Evaluando.select().where(
+	                               models.Evaluando.colega == g.user._get_current_object(),
+	                               models.Evaluando.competencia == competencia.competencia,
+	                               models.Evaluando.tipo == competencia.tipo).count()
+		veces = models.Evaluando.select().where(
+		        	models.Evaluando.colega == g.user._get_current_object(),
+		        	models.Evaluando.competencia == competencia.competencia).count()
+		print("{}:{} # {}".format(competencia.competencia, competencia.tipo, ((competencias/veces)*100)))
+
+	lista_datos = list()
+
+	for dato in datos:
+		lista_dato = {
+		"evaluador" : dato.empleado.to_json(),
+		"evaluado" : dato.colega.to_json(),
+		"competencia" : dato.competencia.to_json(),
+		"tipo" : dato.tipo.to_json()
+		}
+		lista_datos.append(lista_dato)
+
+	return json.dumps(lista_datos)
+
+@app.route('/resultados')
+@login_required
+def resultados():
+	return make_response(open('templates/reportes.html').read())
 if __name__ == '__main__':
 	models.initialize()
 	app.run(
