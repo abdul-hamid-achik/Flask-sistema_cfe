@@ -261,34 +261,29 @@ def neutras():
 @app.route('/reporte')
 @login_required
 def reporte():
-	datos = models.Evaluando.select().where(models.Evaluando.colega == g.user._get_current_object())
+	### obtener todas las competencias evaluadas
+	competencias = models.Evaluando.select().where(models.Evaluando.colega==g.user._get_current_object())
+	for competencia in competencias:
+		
+		print("{} evaluo a {} con la competencia {} decidiendo que es {} en su persona".format(
+			competencia.empleado, 
+			competencia.colega,
+			competencia.competencia, 
+			competencia.tipo)
+		)
 
-	comp = models.Evaluando.select(models.Evaluando.competencia,
-	                               models.Evaluando.tipo).where(
-	                               models.Evaluando.colega == g.user._get_current_object())
-	print(comp)
-	for competencia in comp:
-		competencias = models.Evaluando.select().where(
-	                               models.Evaluando.colega == g.user._get_current_object(),
-	                               models.Evaluando.competencia == competencia.competencia,
-	                               models.Evaluando.tipo == competencia.tipo).count()
-		veces = models.Evaluando.select().where(
-		        	models.Evaluando.colega == g.user._get_current_object(),
-		        	models.Evaluando.competencia == competencia.competencia).count()
-		print("{}:{} # {}".format(competencia.competencia, competencia.tipo, ((competencias/veces)*100)))
+	#lista_datos = list()
+	#for dato in datos:
+	#	lista_dato = {
+	#	"evaluador" : dato.empleado.to_json(),
+	#	"evaluado" : dato.colega.to_json(),
+	#	"competencia" : dato.competencia.to_json(),
+	#	"tipo" : dato.tipo.to_json()
+	#	}
+	#	lista_datos.append(lista_dato)
 
-	lista_datos = list()
-
-	for dato in datos:
-		lista_dato = {
-		"evaluador" : dato.empleado.to_json(),
-		"evaluado" : dato.colega.to_json(),
-		"competencia" : dato.competencia.to_json(),
-		"tipo" : dato.tipo.to_json()
-		}
-		lista_datos.append(lista_dato)
-
-	return json.dumps(lista_datos)
+	#return json.dumps(lista_datos)
+	return "ok"
 
 @app.route('/resultados')
 @login_required
