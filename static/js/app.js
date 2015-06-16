@@ -309,12 +309,10 @@ angular.module('Sistema-cfe', [])
   }
 
   $scope.continuar = function(){
-    alert($scope.suma);
-   if ($scope.suma > 9 ){
 
       $window.location.href = '/sistema';
 
-   }
+
     //else {
     //  var resultado = 10 - $scope.suma;
     //  console.log(resultado);

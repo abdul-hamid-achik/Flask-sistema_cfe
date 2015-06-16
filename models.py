@@ -120,6 +120,10 @@ class Competencias(Model):
     def __repr__(self):
         return self.nombre
 
+    def get_numero_por_usuario(self, usuario):
+        evaluacion = Evaluando.select().where(Evaluando.colega == usuario, Evaluando.competencia == self.id).count()
+        return evaluacion
+
 
 
 class TipoCompetencia(Model):
