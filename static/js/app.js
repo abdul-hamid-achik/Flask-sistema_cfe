@@ -86,6 +86,19 @@ angular.module('Sistema-cfe', [])
       }
     }
 
+
+  $scope.reportes = function(){
+      $http.post('/evaluando_neutras',{
+      competencias:  $scope.competencias,
+      colega : $scope.colega,
+      tipo : 'Neutras'
+     }).success( function (response) {
+        console.log(response);
+      });
+
+
+  }
+
     $scope.si = function(){
         var comp = $('h1').html();
         $http.post('/evaluando', {
@@ -139,13 +152,7 @@ angular.module('Sistema-cfe', [])
         $http.post('/iniciar_sesion', values).success(function () {
         });
     }
-     $scope.reportes = function(){
 
-
-      $window.location.href = '/resultados';
-
-
-  }
 
 }).filter('unique', function() {
    return function(collection, keyname) {
@@ -190,6 +197,7 @@ angular.module('Sistema-cfe', [])
             switch(caso){
               case "Colegas":
               try{
+
                   var index = $scope.colegas.indexOf(lista[i]);
                   if($scope.colegas_izq.length<3){
                     $scope.colegas_izq.push(lista[i]);
@@ -198,7 +206,7 @@ angular.module('Sistema-cfe', [])
                     $scope.colegas_der.push(lista[i]);
                   }
 
-                  $scope.colega.splice(index,1);
+                  $scope.colegas.splice(index,1);
                 }
                 catch(err){
                 }

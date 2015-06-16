@@ -111,34 +111,53 @@ class Competencias(Model):
     class Meta:
         database = DATABASE
 
-    def to_json(self):
-        return {
-        "nombre" : self.nombre,
-        "descripcion" : self.descripcion
-        }
-
-    def __repr__(self):
-        return self.nombre
 
     def get_numero_por_usuario(self, usuario):
         evaluacion = Evaluando.select().where(Evaluando.colega == usuario, Evaluando.competencia == self.id).count()
         return evaluacion
 
 
+    def to_json(self):
+        return {
+        "nombre" : self.nombre,
+        "descripcion" : self.descripcion
+        }
+
+
+    def __repr__(self):
+        return self.nombre
+
+    
+
+
+
+
 
 class TipoCompetencia(Model):
     nombre = CharField(max_length=50)
+
+
     class Meta:
         database = DATABASE
+
 
     def to_json(self):
         return {
         "nombre" : self.nombre
         }
 
+
     def __repr__(self):
         return self.nombre
 
+    def numero_tipo_competencia(self, competencia, usuario):
+
+        tipo = Evaluando.select().where(
+            Evaluando.colega == usuario,
+            Evaluando.competencia == competencia,
+            Evaluando.tipo == self.id
+            ).count()
+        return tipo
 
 
 class Evaluando(Model):
@@ -147,11 +166,13 @@ class Evaluando(Model):
     competencia = ForeignKeyField(Competencias, related_name='competencia')
     tipo = ForeignKeyField(TipoCompetencia, related_name='tipo')
 
+
     class Meta:
         database = DATABASE
         indexes = (
             (('empleado','colega', 'tipo', 'competencia'), True),
         )
+
 
     def to_json(self):
         return {
@@ -160,6 +181,7 @@ class Evaluando(Model):
         "competencia": self.competencia,
         "tipo": self.tipo
         }
+
 
     @classmethod
     def nuevo(cls, empleado, colega, competencia, tipo):

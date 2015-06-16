@@ -167,6 +167,27 @@ def evaluando():
 		}
 	)
 
+@app.route('/evaluando_neutras', methods=['POST'])
+@login_required
+def evaluando_neutras():	
+
+	evaluacion = request.get_json()
+
+	for competencia in evaluacion['competencias']:
+		usuario = g.user._get_current_object()
+		colega = models.Usuario.get(models.Usuario.nombre**evaluacion['colega']['nombre'])
+		competencia = models.Competencias.get(models.Competencias.nombre**competencia['nombre'])
+		tipo = models.TipoCompetencia.get(models.TipoCompetencia.nombre**'Neutras')
+		
+		models.Evaluando.nuevo(
+			empleado=usuario,
+			colega=colega,
+			competencia=competencia,
+			tipo=tipo
+
+			)
+	return "ok"
+
 
 @app.route('/cerrar_sesion')
 @login_required
@@ -261,17 +282,42 @@ def neutras():
 @app.route('/reporte')
 @login_required
 def reporte():
+
 	### obtener todas las competencias evaluadas
-	competencias = models.Evaluando.select().where(models.Evaluando.colega==g.user._get_current_object())
-	for competencia in competencias:
+
+	evaluaciones = models.Evaluando.select().where(models.Evaluando.colega==g.user._get_current_object())
+	for evaluacion in evaluaciones:
 		
 		print("{} evaluo a {} con la competencia {} decidiendo que es {} en su persona".format(
-			competencia.empleado, 
-			competencia.colega,
-			competencia.competencia, 
-			competencia.tipo)
+			evaluacion.empleado, 
+			evaluacion.colega,
+			evaluacion.competencia, 
+			evaluacion.tipo)
+		)
+		print("numero de {} en {}".format(evaluacion.competencia, evaluacion.colega))
+
+		print(evaluacion.competencia.get_numero_por_usuario(
+			evaluacion.colega
+			)
 		)
 
+		print("numero de {} ".format(evaluacion.tipo))
+
+		print(
+			evaluacion.tipo.numero_tipo_competencia(
+				evaluacion.colega, 
+				evaluacion.competencia
+				)
+			)
+
+	lista_datos = [ {
+		"evaluador": evaluacion.empleado.to_json(),
+		"evaluado": evaluacion.colega.to_json(),
+		"competencia" : evaluacion.competencia.to_json(),
+		"tipo" :evaluacion.tipo.to_json(),
+		"cantidad" : evaluacion.competencia.get_numero_por_usuario(evaluacion.colega),
+		"cantidad_por_tipo": evaluacion.tipo.numero_tipo_competencia(evaluacion.competencia, evaluacion.colega)
+	} for evaluacion in evaluaciones]
 	#lista_datos = list()
 	#for dato in datos:
 	#	lista_dato = {
@@ -283,7 +329,7 @@ def reporte():
 	#	lista_datos.append(lista_dato)
 
 	#return json.dumps(lista_datos)
-	return "ok"
+	return json.dumps(lista_datos)
 
 @app.route('/resultados')
 @login_required
