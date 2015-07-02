@@ -139,3 +139,16 @@ INSERT INTO usuario(rpe,nombre,puesto,departamento,correo,zona) VALUES ('CG503',
 INSERT INTO usuario(rpe,nombre,puesto,departamento,correo,zona) VALUES ('J064R','Maldonado Velázquez Alejandro','Supervisor','Modernización y puesta en servicio','alejandro.maldonado@cfe.gob.mx','GTZN');
 INSERT INTO usuario(rpe,nombre,puesto,departamento,correo,zona) VALUES ('9B0RY','Salazar Galindo Iván','Supervisor','Seguimiento de Programas y Mejora de Procesos','ivan.salazar@cfe.gob.mx','GTZN');
 INSERT INTO usuario(rpe,nombre,puesto,departamento,correo,zona) VALUES ('SK119','Valdez Hernández Bernardo','Supervisor','Recursos Humanos','bernardo.valdez01@cfe.gob.mx','GTZN');
+
+
+INSERT INTO preguntas(pregunta, competencia_id) values ('Pregunta de ejemplo', 3);
+
+INSERT INTO preguntas(pregunta, competencia_id) values ('Pregunta de ejemplo 1', 3);
+
+INSERT INTO preguntas(pregunta, competencia_id) values ('Pregunta de ejemplo 4', 3);
+
+INSERT INTO preguntas(pregunta, competencia_id) values ('Pregunta de ejemplo 234', 3);
+
+INSERT INTO preguntas(pregunta, competencia_id) values ('Pregunta de ejemplo 234234', 3);
+
+INSERT INTO preguntas(pregunta, competencia_id) values ('Pregunta de ejemplo 234234', 3);

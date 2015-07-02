@@ -1,0 +1,22 @@
+{% extends 'layout.html'%}
+{% block contenido%}
+{% raw %}
+            <div class="wrapper" ng-controller="autoevaluacion">
+	            <select  id="seleccionar_competencias" ng-model="competencia" ng-options="competencia.nombre for competencia in competencias" ng-change="selectedValue(competencia)">
+	            	<option value='' disabled>Seleccionar una competencia</option>
+	            </select>
+            	<div class="autoevaluacion">
+            	<h1>Autoevaluacion</h1>
+            	<ul>
+            		<li ng-repeat="pregunta in preguntas">{{ pregunta.pregunta }}
+            		<form action="/respuestas_preguntas" method="POST">
+            			<label for="True">Verdadero</label>
+            			<input id="True" type="radio" name="respuesta" value="True">
+            			<label for="False">Falso</label>
+            			<input id="False" type="radio" name="respuesta" value="False">
+            		</form></li>
+            	</ul>
+            	</div>
+            </div>
+{% endraw %}
+{% endblock%}

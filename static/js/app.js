@@ -88,15 +88,15 @@ angular.module('Sistema-cfe', [])
 
 
   $scope.reportes = function(){
-      $http.post('/evaluando_neutras',{
-      competencias:  $scope.competencias,
-      colega : $scope.colega,
-      tipo : 'Neutras'
-     }).success( function (response) {
-        console.log(response);
-      });
-
-
+    for (i = 0; i < $scope.colegas.length; i++){
+      if(confirm('Deseas enviar la evaluacion de '+ $scope.colegas[i].nombre)){
+          $http.post('/evaluando_neutras',{
+            competencias:  $scope.competencias,
+            colega : $scope.colegas[i],
+            tipo : 'Neutras'
+         });
+        }
+      }
   }
 
     $scope.si = function(){
@@ -177,7 +177,7 @@ angular.module('Sistema-cfe', [])
         var output = res[res.length-2] + " " + res[res.length-1] +" " + res[0] + " " + res[1];
       }
       else{
-        var output = res[res.length-1]+" " + res[1] + " " + res[2];
+        var output = res[res.length-1]+" " + res[0] + " " + res[1];
       }
       return output;
     }
@@ -317,23 +317,31 @@ angular.module('Sistema-cfe', [])
   }
 
   $scope.continuar = function(){
-
       $window.location.href = '/sistema';
-
-
-    //else {
-    //  var resultado = 10 - $scope.suma;
-    //  console.log(resultado);
-    //  alert("te falta seleccionar: " + resultado + " para continuar.");
-   // }
   }
 
-}).controller('reporte', function($scope,$http,$window)
-{
+}).controller('reporte', function ($scope, $http, $window){
+
   $http.get('/reporte').success(function(response){
     $scope.datos = response;
-  });
+  }); 
 
+}).controller('autoevaluacion', function ($scope, $http){
+
+  $http.get('/get_competencias').success(function(response){
+    $scope.competencias = response;
+  }); 
+
+  $scope.selectedValue = function(competencia){
+    $scope.competencia = competencia;
+    $http.post('/get_preguntas', $scope.competencia
+    ).success(function(response){
+      $scope.preguntas = response;
+    });
+  }
+  $scope.respuesta = function(value){
+    $scope.respuesta = value;
+  }
 
 });
 

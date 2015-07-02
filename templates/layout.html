@@ -12,8 +12,20 @@
     </head>
 
     <body ng-app="Sistema-cfe">
+
+    <div class="fondo">
+        <nav class="navbar navbar-default">
+            <ul class="nav navbar-nav   ">
+                <li><a href="/">inicio</a></li>
+                <li><a href="/seleccionar_colegas">seleccion</a></li>
+                <li><a href="/sistema">sistema</a></li>
+                <li><a href="/auto_evaluacion">evaluacion personal</a></li>
+                <li><a href="/resultados">reporte personal</a></li>
+            </ul>
+        </nav>
         {% block contenido %}
         {% endblock %}
-        <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js" charset="utf-8"></script>
     </body>
 </html>

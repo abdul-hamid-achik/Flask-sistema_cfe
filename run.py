@@ -67,9 +67,7 @@ def get_usuario():
 @app.route('/sistema')
 @login_required
 def sistema():
-	return make_response(open('templates/sistema.html').read())
-
-
+	return render_template('sistema.html')
 
 ####
 ####    seleccionar a los que te permitiran evaluarlos
@@ -79,7 +77,7 @@ def sistema():
 @login_required
 def seleccionar_colegas():
 
-	return make_response(open('templates/seleccionar_colegas.html').read())
+	return render_template('seleccionar_colegas.html')
 
 @app.route('/colegas')
 @login_required
@@ -282,61 +280,51 @@ def neutras():
 @app.route('/reporte')
 @login_required
 def reporte():
-
-	### obtener todas las competencias evaluadas
-
-	evaluaciones = models.Evaluando.select().where(models.Evaluando.colega==g.user._get_current_object())
-	for evaluacion in evaluaciones:
-		
-		print("{} evaluo a {} con la competencia {} decidiendo que es {} en su persona".format(
-			evaluacion.empleado, 
-			evaluacion.colega,
-			evaluacion.competencia, 
-			evaluacion.tipo)
-		)
-		print("numero de {} en {}".format(evaluacion.competencia, evaluacion.colega))
-
-		print(evaluacion.competencia.get_numero_por_usuario(
-			evaluacion.colega
-			)
-		)
-
-		print("numero de {} ".format(evaluacion.tipo))
-
-		print(
-			evaluacion.tipo.numero_tipo_competencia(
-				evaluacion.colega, 
-				evaluacion.competencia
-				)
-			)
-
-	lista_datos = [ {
-		"evaluador": evaluacion.empleado.to_json(),
-		"evaluado": evaluacion.colega.to_json(),
-		"competencia" : evaluacion.competencia.to_json(),
-		"tipo" :evaluacion.tipo.to_json(),
-		"cantidad" : evaluacion.competencia.get_numero_por_usuario(evaluacion.colega),
-		"cantidad_por_tipo": evaluacion.tipo.numero_tipo_competencia(evaluacion.competencia, evaluacion.colega)
-	} for evaluacion in evaluaciones]
-	#lista_datos = list()
-	#for dato in datos:
-	#	lista_dato = {
-	#	"evaluador" : dato.empleado.to_json(),
-	#	"evaluado" : dato.colega.to_json(),
-	#	"competencia" : dato.competencia.to_json(),
-	#	"tipo" : dato.tipo.to_json()
-	#	}
-	#	lista_datos.append(lista_dato)
-
-	#return json.dumps(lista_datos)
-	return json.dumps(lista_datos)
+	competencias = models.Competencias.select()
+	tipocompetencia = models.TipoCompetencia.select()
+	datos = { 
+		"nombre" : g.user._get_current_object().nombre, 
+		"competencias": [ 
+		{
+			"nombre": competencia.nombre,
+			"numero" : competencia.get_numero_por_usuario(g.user._get_current_object()),
+			"tipo": [{
+				"nombre": tipo.nombre,
+				"numero": tipo.numero_tipo_competencia(competencia,g.user._get_current_object())
+			} for tipo in tipocompetencia
+			]
+		} for competencia in competencias
+		]
+	}
+	return json.dumps(datos)
 
 @app.route('/resultados')
 @login_required
 def resultados():
-	return make_response(open('templates/reportes.html').read())
+	return render_template('reportes.html')
+
+@app.route('/auto_evaluacion')
+@login_required
+def auto_evaluacion():
+
+	return render_template('auto_evaluacion.html')
+
+@app.route('/get_preguntas', methods=['POST'])
+@login_required
+def get_preguntas():
+	competencia =  models.Competencias.select().where(models.Competencias.nombre == request.get_json()['nombre']).get()
+	return json.dumps(competencia.preguntas())
+
+@app.route('/respuestas_preguntas', methods=['POST'])
+@login_required
+def respuestas_preguntas():
+	print(request.form)
+	return "ok"
+	
 if __name__ == '__main__':
 	models.initialize()
+	#competencia = models.Competencias.get(models.Competencias.id == 1)
+	#models.Preguntas.nueva(competencia, "Pregunta ejemplo")
 	app.run(
     	debug=DEBUG,
     	port=PORT,

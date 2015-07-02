@@ -80,13 +80,6 @@ class Usuario(UserMixin, Model):
         )
 
 
-#
-# superior = Jerarquia.get(Jerarquia.nombre**subgerente.puesto)
-# usuario = Usuario.select().where(Usuario.puesto==superior.nombre)
-# subgerente = usuario[0]
-# usuario = Usuario.get((Usuario.puesto**superior.superior))
-#
-
 class PermisoEvaluar(Model):
     evaluado = ForeignKeyField(Usuario, related_name='evaluado')
     evaluador = ForeignKeyField(Usuario, related_name='evaluador')
@@ -123,19 +116,60 @@ class Competencias(Model):
         "descripcion" : self.descripcion
         }
 
+    def preguntas(self):
+        preguntas = Preguntas.select().where(Preguntas.competencia == self.id)
+        lista = [pregunta.to_json() for pregunta in preguntas]
+        return lista
 
     def __repr__(self):
         return self.nombre
 
-    
+
+class Preguntas(Model):
+    competencia = ForeignKeyField(Competencias)
+    pregunta = CharField(max_length=500)
+
+    class Meta:
+        database = DATABASE
+
+    @classmethod
+    def nueva(cls, competencia, pregunta):
+        cls.create(
+                competencia=competencia,
+                pregunta=pregunta
+        )
+    def to_json(self):
+        return {
+            "pregunta" : self.pregunta
+        }
+    def get_respuestas(self):
+        respuestas = Respuestas.select().where(Respuestas.pregunta == self.id)
+        return respuestas
+
+    def __repr__(self):
+        return self.pregunta
 
 
+class Respuestas(Model):
+    usuario = ForeignKeyField(Usuario)
+    pregunta = ForeignKeyField(Preguntas)
+    respuesta = BooleanField()
+
+    class Meta:
+        database = DATABASE
+
+    @classmethod
+    def nueva(cls, usuario, pregunta, respuesta):
+        cls.create(
+            usuario=usuario,
+            pregunta=pregunta,
+            respuesta=respuesta
+        )
 
 
 
 class TipoCompetencia(Model):
     nombre = CharField(max_length=50)
-
 
     class Meta:
         database = DATABASE
@@ -213,10 +247,12 @@ def initialize():
         Competencias,
         Evaluando,
         TipoCompetencia,
-        Jerarquia], safe=True)
+        Jerarquia,
+        Preguntas,
+        Respuestas], safe=True)
     DATABASE.close()
 
 def drop():
     DATABASE.connect()
-    DATABASE.drop_tables([Competencias,PermisoEvaluar], safe=True)
+    DATABASE.drop_tables([Preguntas], safe=True)
     DATABASE.close()
