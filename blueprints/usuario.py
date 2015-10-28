@@ -21,13 +21,12 @@ def usuario_info(rpe):
 @usuario.route('/usuario/nuevo', methods=['POST'])
 def usuario_nuevo():
 	print("ok")
-	print(request)
+	print(dir(request))
 	Usuario.nuevo(
     	rpe=request.form['rpe'],
     	nombre=request.form['nombre'],
     	puesto=request.form['puesto'],
     	departamento=request.form['departamento'],
     	correo=request.form['correo'],
-    	registro=datetime.datetime.now,
     	zona=request.form['zona'])#Usuario.get(Usuario.rpe**rpe).to_json()
 	return json.dumps("OK!")

@@ -12,8 +12,8 @@ class Usuario(UserMixin, Model):
     puesto = CharField(max_length=100)
     departamento = CharField(max_length=100)
     correo = CharField(unique=True)
-    #registro = DateTimeField(default=datetime.datetime.now)
-    #admin = BooleanField(default=False)
+    registro = DateTimeField(default=datetime.datetime.now)
+    admin = BooleanField(default=False)
     zona = CharField(max_length=20)
 
     class Meta:
@@ -21,7 +21,7 @@ class Usuario(UserMixin, Model):
         #order_by = ('-registro',)
 
     @classmethod
-    def nuevo(cls, rpe, nombre, puesto, departamento, correo, admin=False):
+    def nuevo(cls, rpe, nombre, puesto, departamento, correo, zona):
         try:
             cls.create(
                 rpe=rpe,
@@ -29,7 +29,7 @@ class Usuario(UserMixin, Model):
                 puesto=puesto,
                 departamento=departamento,
                 correo=correo,
-                #admin=admin
+                zona=zona
             )
         except IntegrityError:
             raise ValueError("El usuario ya existe")
