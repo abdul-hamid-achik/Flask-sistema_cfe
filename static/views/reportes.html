@@ -1,0 +1,18 @@
+<div class="wrapper resultados">
+    <div class="row reporte" ng-controller="reporte">
+        <h1>{{ datos.nombre | ordenar }}</h1>
+        <h2>Evaluaciones recibidas: {{ datos.competencias[0].numero }}</h2>
+        <table class="table">
+        <tr>
+            <th>Nombre</th>
+            <th>{{ datos.competencias[0].tipo[0].nombre }}</th>
+            <th>{{ datos.competencias[0].tipo[1].nombre }}</th>
+            <th>{{ datos.competencias[0].tipo[2].nombre }}</th>
+        </tr>
+        <tr ng-repeat="dato in datos.competencias">
+            <td>{{ dato.nombre}}</td>
+            <td ng-repeat="tipo in dato.tipo">{{ tipo.numero }}</td>
+        </tr>
+        </table>
+    </div>
+</div>

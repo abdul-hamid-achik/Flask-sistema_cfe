@@ -1,0 +1,43 @@
+<div class="wrapper">
+    <div>
+        <div class="row barra-menu">
+            <div id="competencia-menu" class="col-md-4">
+                <h1>Competencias</h1>
+                <button ng-click="si()">Si</button>
+                <button ng-click="no()">No</button>
+            </div>
+            <div class="col-md-4" id="competencia-descripcion">
+                <p>{{ competencia_actual.descripcion }}</p>
+            </div>
+            <div id="empleados-menu" class="col-md-4">
+                <p style="display:inline">Evaluando a: </p>
+                <select id="empleados" ng-model="colega_seleccionado" ng-options="colega.nombre |ordenar for colega in colegas" ng-change="selectedValue(colega_seleccionado)">
+                    <option value="" disabled>Seleccione a alguien</option>
+                </select>
+            </div>
+        </div>
+            <div class="cuadro" id="izq">
+                <h2 class="competencias_cuadro_titulo">Competencias Existentes: {{ competencias_existentes.length}}</h2>
+                <ul class="competencias_lista" id="izq-ls">
+                    <li data-ng-model="usuario" data-ng-repeat="competencia in competencias_existentes "><a href="#" ng-click="remove($index)">{{ competencia.nombre }}</a></li>
+
+                </ul>
+            </div>
+            <div class="cuadro" >
+                <h2 class="competencias_cuadro_titulo">Competencias Neutras: {{ competencias.length }}</h2>
+                <ul class="competencias_lista">
+                    <li data-ng-model="usuario" data-ng-repeat="competencia in competencias "><a href="#" ng-click="remove($index)">{{ competencia.nombre }}</a></li>
+                </ul>
+            </div>
+            <div class="cuadro" id="der">
+                <h2 class="competencias_cuadro_titulo">Competencias Inexistentes:  {{ competencias_inexistentes.length }}</h2>
+                <ul class="competencias_lista" id="der-ls">
+                    <li data-ng-model="usuario" data-ng-repeat="competencia in competencias_inexistentes "><a href="#" ng-click="remove($index)">{{ competencia.nombre }}</a></li>
+
+                </ul>
+            </div>
+            <div id="resultados">
+                <button ng-click='reportes()'>Enviar resultados</button>
+            </div>
+        </div>
+</div>

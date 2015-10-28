@@ -4,7 +4,7 @@ from flask.ext.login import UserMixin
 from flask.ext.bcrypt import generate_password_hash
 from peewee import *
 
-DATABASE = MySQLDatabase('sistema_cfe', user='root', password='aa121292')
+DATABASE = SqliteDatabase('sistema_cfe.db')
 
 
 class Usuario(UserMixin, Model):
@@ -13,13 +13,13 @@ class Usuario(UserMixin, Model):
     puesto = CharField(max_length=100)
     departamento = CharField(max_length=100)
     correo = CharField(unique=True)
-    registro = DateTimeField(default=datetime.datetime.now)
-    admin = BooleanField(default=False)
+    #registro = DateTimeField(default=datetime.datetime.now)
+    #admin = BooleanField(default=False)
     zona = CharField(max_length=20)
 
     class Meta:
         database = DATABASE
-        order_by = ('-registro',)
+        #order_by = ('-registro',)
 
     @classmethod
     def nuevo(cls, rpe, nombre, puesto, departamento, correo, admin=False):
@@ -30,7 +30,7 @@ class Usuario(UserMixin, Model):
                 puesto=puesto,
                 departamento=departamento,
                 correo=correo,
-                admin=admin
+                #admin=admin
             )
         except IntegrityError:
             raise ValueError("El usuario ya existe")
@@ -45,7 +45,7 @@ class Usuario(UserMixin, Model):
             "puesto": self.puesto,
             "departamento": self.departamento,
             "correo": self.correo,
-            "admin": self.admin,
+            #"admin": self.admin,
             "zona": self.zona
         }
 

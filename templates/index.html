@@ -1,11 +1,38 @@
- {% extends 'layout.html' %}
- {% block contenido %}
- <div id="acceso">
-            <form id="form"  method='POST' action='/iniciar_sesion'>
-                <input type="email" placeholder="correo" id="correo" name="correo">
-                <input type="password" placeholder="rpe" id="password" name="password">
-                <button type="submit" ng-click="submit()">Iniciar Sesion</button>
-            </form>
- 
-</div>
-{% endblock %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="/static/css/bootstrap.css">
+        <link rel="stylesheet" href="/static/css/styles.css">
+        <script src="/static/app/js/jquery-2.1.3.js"></script>
+        <script src="/static/app/js/bootstrap.js"></script>
+        <script src="/static/app/js/angular.js"></script> 
+        <script src="/static/app/js/ui-utils.js"></script>
+        <script src="/static/app/js/others.js"></script>
+        <script src="/static/app/app.js"></script>
+        <script src="/static/app/js/angular-route.js"></script>
+
+        <!-- Angular Controllers -->
+        <script src="/static/app/controllers/autoevaluacionController.js"></script>
+        <script src="/static/app/controllers/loginController.js"></script>
+        <script src="/static/app/controllers/colegasController.js"></script>
+        <script src="/static/app/controllers/competenciasController.js"></script>
+        <script src="/static/app/controllers/reportesController.js"></script>
+
+    </head>
+
+    <body ng-app="cfe">
+
+    <div class="fondo">
+        <nav class="navbar navbar-default">
+            <ul class="nav navbar-nav   ">
+                <li><a href="#/">inicio</a></li>
+                <li><a href="#/seleccionar_colegas">seleccion</a></li>
+                <li><a href="#/sistema">sistema</a></li>
+                <li><a href="#/auto_evaluacion">evaluacion personal</a></li>
+                <li><a href="#/resultados">reporte personal</a></li>
+            </ul>
+        </nav>
+        <ng-view></ng-view>
+    </div>
+    </body>
+</html>

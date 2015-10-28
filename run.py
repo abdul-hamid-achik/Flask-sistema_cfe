@@ -1,12 +1,11 @@
 from flask import (Flask, g, render_template, flash, redirect, url_for, request, make_response, jsonify)
 from flask.ext.login import (LoginManager, login_user, logout_user, login_required, current_user)
 from flask.ext.bcrypt import check_password_hash
-import forms
 import models
 from werkzeug import secure_filename
 import os
 import json
-
+import ast
 DEBUG = True
 PORT = 8000
 HOST = '127.0.0.1'
@@ -50,24 +49,11 @@ def main():
 	return render_template('index.html')
 
 
-@app.route('/iniciar_sesion', methods=['POST'])
-def iniciar_sesion():
-	usuario = models.Usuario.get(models.Usuario.correo**request.form['correo'])
-	if request.form['password'] == usuario.rpe:
-		login_user(usuario)
-		return redirect(url_for('seleccionar_colegas'))
-
-
 @app.route('/usuario')
 @login_required
 def get_usuario():
 	return json.dumps(g.user._get_current_object().to_json())
 
-
-@app.route('/sistema')
-@login_required
-def sistema():
-	return render_template('sistema.html')
 
 ####
 ####    seleccionar a los que te permitiran evaluarlos
@@ -277,9 +263,9 @@ def neutras():
 
 	return json.dumps(respuesta)
 
-@app.route('/reporte')
+@app.route('/reportes')
 @login_required
-def reporte():
+def reportes():
 	competencias = models.Competencias.select()
 	tipocompetencia = models.TipoCompetencia.select()
 	datos = { 
@@ -298,16 +284,30 @@ def reporte():
 	}
 	return json.dumps(datos)
 
-@app.route('/resultados')
-@login_required
-def resultados():
-	return render_template('reportes.html')
+#cambiar a angular
+#@app.route('/resultados')
+#@login_required
+#def resultados():
+#	return render_template('reportes.html')
 
-@app.route('/auto_evaluacion')
-@login_required
-def auto_evaluacion():
+#@app.route('/auto_evaluacion')
+#@login_required
+#def auto_evaluacion():
+#	return render_template('auto_evaluacion.html')
 
-	return render_template('auto_evaluacion.html')
+#@app.route('/sistema')
+#@login_required
+#def sistema():
+#	return render_template('sistema.html')
+
+@app.route('/iniciar_sesion', methods=['POST'])
+def iniciar_sesion():
+	print(request.form['correo'])
+	usuario = models.Usuario.get(models.Usuario.correo**request.form['correo'])
+	if request.form['password'] == usuario.rpe:
+		login_user(usuario)
+		return 'Login successfull'
+
 
 @app.route('/get_preguntas', methods=['POST'])
 @login_required
@@ -322,6 +322,7 @@ def respuestas_preguntas():
 	return "ok"
 	
 if __name__ == '__main__':
+	#models.drop()
 	models.initialize()
 	#competencia = models.Competencias.get(models.Competencias.id == 1)
 	#models.Preguntas.nueva(competencia, "Pregunta ejemplo")
