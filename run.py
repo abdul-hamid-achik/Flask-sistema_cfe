@@ -1,6 +1,7 @@
 from flask import (Flask, g, render_template, flash, redirect, url_for, request, make_response, jsonify)
 from flask.ext.login import (LoginManager, login_user, logout_user, login_required, current_user)
 from flask.ext.bcrypt import check_password_hash
+from blueprints.usuario import usuario
 import models
 from werkzeug import secure_filename
 import os
@@ -12,7 +13,8 @@ HOST = '127.0.0.1'
 UPLOAD_FOLDER = os.path.dirname(os.path.abspath(__file__)) + '/static/media/uploads'
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.secret_key = 'daniela_omg'
+app.secret_key = 'niggersan'
+app.register_blueprint(usuario, url_prefix='/api')
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -40,6 +42,7 @@ def despues_request(response):
 	"""Cerrar la conexion despues de cada request"""
 	g.db.close()
 	return response
+
 
 
 @app.route('/')
@@ -283,22 +286,6 @@ def reportes():
 		]
 	}
 	return json.dumps(datos)
-
-#cambiar a angular
-#@app.route('/resultados')
-#@login_required
-#def resultados():
-#	return render_template('reportes.html')
-
-#@app.route('/auto_evaluacion')
-#@login_required
-#def auto_evaluacion():
-#	return render_template('auto_evaluacion.html')
-
-#@app.route('/sistema')
-#@login_required
-#def sistema():
-#	return render_template('sistema.html')
 
 @app.route('/iniciar_sesion', methods=['POST'])
 def iniciar_sesion():
