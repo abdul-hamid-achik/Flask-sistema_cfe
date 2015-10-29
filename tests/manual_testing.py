@@ -12,7 +12,7 @@ def testCrearUsuario():
 	test_url = url + "api/usuario/nuevo"
 	datos = dict(
 	    		rpe='79020',
-		    	nombre='Rivera Rodriguez Pedro2',
+		    	nombre='Rivera Rodriguez Pedro',
 		    	puesto='Gerente',
 		    	departamento='Gerencia',
 		    	correo='pedro.rivera2@cfe.gob.mx',
@@ -58,16 +58,29 @@ def testConsultarUsuario():
 
 	r = requests.get(test_url)
 	print(r.json())
-	datos = dict(
-	    		rpe='79020',
-		    	nombre='Rivera Pedro',
-		    	puesto='Sub Gerente',
-		    	departamento='Gerencia',
-		    	correo='pedro.rivera@cfe.gob.mx',
-		    	zona='GTZN'
-	    		)
-	for (k,v) in r.json():
-		print("key: {}, value: {}".format(k,v))
+	if isinstance(r.json(), dict):
+		print("Exitoso!")
+	else:
+		print("Fracaso!")
+
+	#datos = dict(
+	#    		rpe='79020',
+	#	    	nombre='Rivera Pedro',
+	#	    	puesto='Sub Gerente',
+	#	    	departamento='Gerencia',
+	#	    	correo='pedro.rivera@cfe.gob.mx',
+	#	    	zona='GTZN'
+	#    		)
+	#for (k,v) in r.json().items():
+	#	print("key: {}, value: {}".format(k,v))
+	#	print("comparar valores:")
+	#	if datos[k] == v:
+	#		pass
+	#		#print("es igual")
+	#	else:
+	#		pass
+	#		#print("error en {}: valor = {}, esperado = {}".format(k,v,datos[k]))
+
 
 
 def testBorrarUsuario():
@@ -88,7 +101,11 @@ def testConsultarUsuarios():
 	global url
 	test_url = url + "api/usuario/todos"
 	r = requests.get(test_url)
-	print(r.json())	
+	if len(r.json()) > 0:
+		print("Exitoso!")
+	else:
+		print("Fracaso!")
+
 
 
 
