@@ -8,7 +8,7 @@ import os
 import json
 import ast
 DEBUG = True
-PORT = 8000
+PORT = 5000
 HOST = '127.0.0.1'
 UPLOAD_FOLDER = os.path.dirname(os.path.abspath(__file__)) + '/static/media/uploads'
 app = Flask(__name__)

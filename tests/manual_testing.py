@@ -1,22 +1,103 @@
 import requests
-import datetime
+import json
 
-url = "http://localhost:8000/api/usuario/nuevo"
-datos = dict(
-    		rpe='790200',
-	    	nombre='Rivera Rodriguez Pedro2',
-	    	puesto='Gerente',
-	    	departamento='Gerencia',
-	    	correo='pedro.rivera2@cfe.gob.mx',
-	    	registro=str(datetime.datetime.now()),
-	    	zona='GTZN'
-    		)
+url = "http://localhost:5000/"
 
-r = requests.post(url, data=datos)
-#r = requests.get('http://localhost:8000')
-if (r.status_code == 200):
-	print("Pass!")
+def crearUsuarios():
+	pass
+
+def testCrearUsuario():
+	print("test crear usuario: ")
+	global url
+	test_url = url + "api/usuario/nuevo"
+	datos = dict(
+	    		rpe='79020',
+		    	nombre='Rivera Rodriguez Pedro2',
+		    	puesto='Gerente',
+		    	departamento='Gerencia',
+		    	correo='pedro.rivera2@cfe.gob.mx',
+		    	zona='GTZN'
+	    		)
+
+	r = requests.post(test_url, data=datos)
 	print(r.status_code)
-else:
-	print("Fail!")
-	print(r.status_code)
+	if (r.status_code == 200):
+		print("Exitoso!")
+		print(r.content.decode("utf-8"))
+	else:
+		print("Fracaso!")
+		print(r.content.decode("utf-8"))
+
+
+def testActualizarUsuario():
+	print("test actualizar usuario: ")
+	global url
+	rpe = '79020'
+	test_url = url + "api/usuario/{}/actualizar".format(rpe)
+	datos = dict(
+	    		rpe='79020',
+		    	nombre='Rivera Pedro',
+		    	puesto='Sub Gerente',
+		    	departamento='Gerencia',
+		    	correo='pedro.rivera@cfe.gob.mx',
+		    	zona='GTZN'
+	    		)
+	r = requests.put(test_url, data=datos)
+	if (r.status_code == 200):
+		print("Exitoso!")
+		print(r.content.decode("utf-8"))
+	else:
+		print("Fracaso!")
+		print(r.content.decode("utf-8"))
+
+def testConsultarUsuario():
+	print("test consultar usuario en especifico: ")
+	global url
+	rpe = '79020'
+	test_url = url + "api/usuario/{}".format(rpe)
+
+	r = requests.get(test_url)
+	print(r.json())
+	datos = dict(
+	    		rpe='79020',
+		    	nombre='Rivera Pedro',
+		    	puesto='Sub Gerente',
+		    	departamento='Gerencia',
+		    	correo='pedro.rivera@cfe.gob.mx',
+		    	zona='GTZN'
+	    		)
+	for (k,v) in r.json():
+		print("key: {}, value: {}".format(k,v))
+
+
+def testBorrarUsuario():
+	print("test borrar usuario: ")
+	global url
+	rpe = '79020'
+	test_url = url + "api/usuario/{}/borrar".format(rpe)
+	r = requests.delete(test_url)
+	if (r.status_code == 200):
+		print("Exitoso!")
+		print(r.content.decode("utf-8"))
+	else:
+		print("Fracaso!")
+		print(r.content.decode("utf-8"))
+
+def testConsultarUsuarios():
+	print("test consultar todos los usuarios: ")
+	global url
+	test_url = url + "api/usuario/todos"
+	r = requests.get(test_url)
+	print(r.json())	
+
+
+
+
+if __name__ == '__main__':
+	crearUsuarios()
+
+	testCrearUsuario()
+	testActualizarUsuario()
+	testConsultarUsuario()
+	testBorrarUsuario()
+	testConsultarUsuarios()

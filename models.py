@@ -13,12 +13,12 @@ class Usuario(UserMixin, Model):
     departamento = CharField(max_length=100)
     correo = CharField(unique=True)
     registro = DateTimeField(default=datetime.datetime.now)
-    admin = BooleanField(default=False)
+    #admin = BooleanField(default=False)
     zona = CharField(max_length=20)
 
     class Meta:
         database = DATABASE
-        #order_by = ('-registro',)
+        order_by = ('-registro',)
 
     @classmethod
     def nuevo(cls, rpe, nombre, puesto, departamento, correo, zona):
