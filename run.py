@@ -312,8 +312,6 @@ def respuestas_preguntas():
 if __name__ == '__main__':
 	#models.drop()
 	models.initialize()
-	#competencia = models.Competencias.get(models.Competencias.id == 1)
-	#models.Preguntas.nueva(competencia, "Pregunta ejemplo")
 	app.run(
     	debug=DEBUG,
     	port=PORT,

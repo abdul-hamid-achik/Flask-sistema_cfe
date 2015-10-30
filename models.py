@@ -2,9 +2,10 @@ import datetime
 from flask.ext.login import UserMixin
 from flask.ext.bcrypt import generate_password_hash
 from peewee import *
-
+import sys
+sys.path.insert(0, '~/Projects/Flask-sistema_cfe')
+from run import database_select
 DATABASE = SqliteDatabase('sistema_cfe.db')
-
 
 class Usuario(UserMixin, Model):
     rpe = CharField(unique=True)
@@ -253,5 +254,13 @@ def initialize():
 
 def drop():
     DATABASE.connect()
-    DATABASE.drop_tables([Preguntas], safe=True)
+    DATABASE.drop_tables([
+        Usuario,
+        PermisoEvaluar,
+        Competencias,
+        Evaluando,
+        TipoCompetencia,
+        Jerarquia,
+        Preguntas,
+        Respuestas], safe=True)
     DATABASE.close()
