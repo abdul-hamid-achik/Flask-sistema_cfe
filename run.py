@@ -2,6 +2,7 @@ from flask import (Flask, g, render_template, flash, redirect, url_for, request,
 from flask.ext.login import (LoginManager, login_user, logout_user, login_required, current_user)
 from flask.ext.bcrypt import check_password_hash
 from blueprints.usuario import usuario
+from blueprints.competencias import competencias
 import models
 from werkzeug import secure_filename
 import os
@@ -14,8 +15,8 @@ UPLOAD_FOLDER = os.path.dirname(os.path.abspath(__file__)) + '/static/media/uplo
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.secret_key = 'niggersan'
-app.register_blueprint(usuario, url_prefix='/api')
-
+app.register_blueprint(usuario, url_prefix='/api/usuario')
+app.register_blueprint(competencias, url_prefix='/api/competencias')
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = '/'

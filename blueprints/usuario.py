@@ -7,25 +7,22 @@ import datetime
 
 usuario = Blueprint('usuario', __name__ )
 
-@usuario.route('/usuario/todos')
+@usuario.route('/todos')
 def usuarios_all():
-	print(request)
 	usuarios = Usuario.select()
 	lista_usuarios = [usuario.to_json() for usuario in usuarios]
 	return json.dumps(lista_usuarios)
 
-@usuario.route('/usuario/<rpe>')
+@usuario.route('/<rpe>')
 def usuario_info(rpe):
-	print(request)
 	try:
 		usuario = Usuario.select().where(Usuario.rpe == rpe)
 		return json.dumps(usuario[0].to_json()), 200
 	except:
 		return "Error!", 404
 
-@usuario.route('/usuario/nuevo', methods=['POST'])
+@usuario.route('/nuevo', methods=['POST'])
 def usuario_nuevo():
-	print(request)
 	try:
 		Usuario.nuevo(
 	    	rpe=request.form['rpe'],
@@ -38,9 +35,8 @@ def usuario_nuevo():
 	except:
 		return "Error!", 404
 
-@usuario.route('/usuario/<rpe>/borrar', methods=['DELETE'])
+@usuario.route('/<rpe>/borrar', methods=['DELETE'])
 def usuario_borrar(rpe):
-	print(request)
 	try:
 		usuario = Usuario.select().where(Usuario.rpe == rpe)
 		if usuario is not None:
@@ -51,9 +47,8 @@ def usuario_borrar(rpe):
 	except:
 		return "Error!", 404
 
-@usuario.route('/usuario/<rpe>/actualizar', methods=['PUT'])
+@usuario.route('/<rpe>/actualizar', methods=['PUT'])
 def usuario_actualizar(rpe):
-	print(request)
 	try:
 		usuario = Usuario.update(
 			rpe=request.form['rpe'],
