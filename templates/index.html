@@ -23,15 +23,18 @@
     <body ng-app="cfe">
 
     <div class="fondo">
+       <div class="fondo">
         <nav class="navbar navbar-default">
             <ul class="nav navbar-nav   ">
-                <li><a href="#/">inicio</a></li>
-                <li><a href="#/seleccionar_colegas">seleccion</a></li>
-                <li><a href="#/sistema">sistema</a></li>
-                <li><a href="#/auto_evaluacion">evaluacion personal</a></li>
-                <li><a href="#/resultados">reporte personal</a></li>
+                <li><a href="#/">Inicio</a></li>
+                <li><a href="#/seleccionar_colegas">Selección</a></li>
+                <li><a href="#/sistema">Sistema</a></li>
+                <li><a href="#/auto_evaluacion">Evaluación personal</a></li>
+                <li><a href="#/resultados">Reporte personal</a></li>
             </ul>
         </nav>
+        <ng-view></ng-view>
+    </div>
         <ng-view></ng-view>
     </div>
     </body>
