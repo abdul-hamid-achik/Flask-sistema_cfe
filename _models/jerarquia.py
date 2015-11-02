@@ -6,3 +6,10 @@ class Jerarquia(Model):
 
     class Meta:
         database = DATABASE
+        
+    def to_json(self):
+        return{
+    "nombre" = self.nombre,
+    "superior"= self.superior
+    }
+        
