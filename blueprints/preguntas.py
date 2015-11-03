@@ -8,21 +8,7 @@ import datetime
 
 preguntas = Blueprint('preguntas', __name__ )
 
-<<<<<<< HEAD
-@preguntas.route('/todos')
-def preguntas_todas():from flask import Blueprint, request
-import sys
-sys.path.insert(0, '~/Projects/Flask-sistema_cfe')
-from models import Preguntas
-import json
-import datetime
 
-preguntas = Blueprint('preguntas', __name__ )
-
-@preguntas.route('/todos')
-def preguntas_todas():
-	pass
-=======
 @preguntas.route('/todas')
 def preguntas_all():
 	preguntas = Preguntas.select()
@@ -36,7 +22,6 @@ def pregunta_info(id):
 		return json.dumps(pregunta[0].to_json()), 200
 	except:
 		return "Error!", 404
->>>>>>> Alejandra
 
 @preguntas.route('/nueva', methods=['POST'])
 def pregunta_nuevo():
@@ -60,30 +45,7 @@ def pregunta_borrar(id):
 	except:
 		return "Error!", 404
 
-<<<<<<< HEAD
-@preguntas.route('/<int:id>/actualizar', methods=['PUT'])
-def preguntas_actualizar(id):
-	pass
 
-	pass
-
-@preguntas.route('/nueva', methods=['POST'])
-def preguntas_nueva():
-	pass
-	
-@preguntas.route('/<int:id>')
-def preguntas_info(id):
-	pass
-
-@preguntas.route('/<int:id>/borrar', methods=['DELETE'])
-def preguntas_borrar(id):
-	pass
-
-@preguntas.route('/<int:id>/actualizar', methods=['PUT'])
-def preguntas_actualizar(id):
-	pass
-
-=======
 @preguntas.route('/<id>/actualizar', methods=['PUT'])
 def pregunta_actualizar(id):
 	try:
@@ -94,4 +56,3 @@ def pregunta_actualizar(id):
 		return "OK!", 200
 	except:
 		return "Error!", 404
->>>>>>> Alejandra
