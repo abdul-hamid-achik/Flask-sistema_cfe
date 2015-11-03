@@ -4,7 +4,7 @@ from flask.ext.bcrypt import generate_password_hash
 from peewee import *
 import sys
 sys.path.insert(0, '~/Projects/Flask-sistema_cfe')
-from run import database_select
+
 DATABASE = SqliteDatabase('sistema_cfe.db')
 
 class Usuario(UserMixin, Model):

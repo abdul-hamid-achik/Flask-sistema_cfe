@@ -26,8 +26,7 @@ def competencia_nueva():
 	try:
 		competencia = Competencias.create(
 			nombre = request.form['nombre'],
-			descripcion = request.form['descripcion']
-		)
+			descripcion = request.form['descripcion'])
 		return "OK!", 200
 	except:
 		return "Error!", 404
