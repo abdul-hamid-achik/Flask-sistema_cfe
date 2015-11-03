@@ -9,20 +9,19 @@ respuestas = Blueprint('respuestas', __name__ )
 
 @respuestas.route('/todas')
 def respuestas_todas():
-		respuestas = Respuestas.select()
-		lista_respuestas = [respuesta.to_json() for respuesta in respuestas]
-		return json.dumps(lista_respuestas)
+	respuestas = Respuestas.select()
+	lista_respuestas = [respuesta.to_json() for respuesta in respuestas]
+	return json.dumps(lista_respuestas)
 
 
 @respuestas.route('/nueva', methods=['POST'])
 def respuestas_nueva():
 	try:
 		respuesta = Respuestas.create(
-			usuario = usuario.form['usuario'],
-			pregunta = pregunta.form['pregunta'],
-			respuesta = respuesta.form['respuesta']
-			)
-			return "OK", 200
+			usuario = usuario.form['usuario'], #id de el usuario que pone la respuesta
+			pregunta = pregunta.form['pregunta'], #id de pregunta
+			respuesta = respuesta.form['respuesta'])
+		return "OK", 200
 	except:
 		return "Error!", 404
 			
@@ -31,7 +30,7 @@ def respuestas_nueva():
 def respuestas_info(id):
 	try:
 		respuesta = Respuestas.select().where(Respuesta.id == id)
-		return json.dumps (respuesta(0).to_json()),202
+		return json.dumps(respuesta(0).to_json()), 200
 	except:
 		return "Error!", 404
 
@@ -42,9 +41,10 @@ def respuestas_borrar(id):
 		respuesta = Respuestas.select().where(Respuestas.id == id)
 		if respuesta is not None:
 			respuesta[0].delete()
-		return "Se ha eliminado", 200
+			return "Se ha eliminado", 200
 		else:
 			return "Error!", 404
+	except:
 		return "Error", 404		
 
 @respuestas.route('/<int:id>/actualizar', methods=['PUT'])
@@ -54,9 +54,9 @@ def respuestas_actualizar(id):
 			usuario = request.form['usuario'],
 			pregunta = request.form['pregunta'],
 			respuesta = request.form['respuesta']
-).where (Respuestas.id == id)
+			).where(Respuestas.id == id)
 		respuestas.execute()
 		return "Ok!", 200
-		except:
-			return "Error", 404
+	except:
+		return "Error", 404
 

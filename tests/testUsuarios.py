@@ -82,7 +82,6 @@ def testConsultarUsuario():
 	#		#print("error en {}: valor = {}, esperado = {}".format(k,v,datos[k]))
 
 
-
 def testBorrarUsuario():
 	print("test borrar usuario: ")
 	global url
@@ -107,121 +106,20 @@ def testConsultarUsuarios():
 		print("Fracaso!")
 
 
-#Aqui inicia el test de las Respuestas
-
-
-def crearRespuestas():
-	pass
-
-def testCrearRespuestas():
-	print("Test para crear respuestas: ")
-	global url
-	test_url = url + "api/respuestas/nueva"
-	datos = dict(
-		usuario = 'alejandra'
-		pregunta = 'acomoda la competencia en el recuadro adecuado'
-		respuesta = 'ambicioso/a'
-	    		)
-
-	r = requests.post(test_url, data=datos)
-	print(r.status_code)
-	if (r.status_code == 200):
-		print("Exitoso!")
-		print(r.content.decode("utf-8"))
-	else:
-		print("Fracaso!")
-		print(r.content.decode("utf-8"))
-
-
-def testActualizarRespuestas():
-	print("Test actualizar la respuesta:")
-	global url
-	# rpe = '79020'
-	id ='3'
-	test_url = url + "api/respuestas/{}/actualizar".format(id)
-	datos = dict(
-	    		usuario='alejandra'
-	    		pregunta='Escoge lo que creas que peor lo describe'
-	    		respuesta='Toma de decisiones'
-	    		)
-	r = requests.put(test_url, data=datos)
-	if (r.status_code == 200):
-		print("Exitoso!")
-		print(r.content.decode("utf-8"))
-	else:
-		print("Fracaso!")
-		print(r.content.decode("utf-8"))
-
-def testConsultarRespuestas():
-	print("Test consultar una respuesta en especifico:")
-	global url
-	# rpe = '79020'
-	id='3'
-	test_url = url + "api/respuestas/{}".format(id)
-
-	r = requests.get(test_url)
-	print(r.json())
-	if isinstance(r.json(), dict):
-		print("Exitoso!")
-	else:
-		print("Fracaso!")
-
-	# datos = dict(
-	#    		usuario='alejandra'
-	#     	pregunta='Escoge lo que creas que peor lo describe'
-	#     	respuesta='Toma de decisiones'
-	#    		)
-	# for (k,v) in r.json().items():
-	# 	print("key: {}, value: {}".format(k,v))
-	# 	print("Comparar los valores:")
-	# 	if datos[k] == v:
-	# 		pass
-	# 		#print("es igual")
-	# 	else:
-	# 		pass
-	# 		#print("error en {}: valor = {}, esperado = {}".format(k,v,datos[k]))
-
-
-
-def testBorrarRespuestas():
-	print("Test para borrar la respuesta: ")
-	global url
-	# rpe = '79020'
-	id='3'
-	test_url = url + "api/respuestas/{}/borrar".format(id)
-	r = requests.delete(test_url)
-	if (r.status_code == 200):
-		print("Exitoso!")
-		print(r.content.decode("utf-8"))
-	else:
-		print("Fracaso!")
-		print(r.content.decode("utf-8"))
-
-def testConsultarRespuestas():
-	print("Test para consultar todas las respuestas: ")
-	global url
-	test_url = url + "api/respuestas/todas"
-	r = requests.get(test_url)
-	if len(r.json()) > 0:
-		print("Exitoso!")
-	else:
-		print("Fracaso!")
-
-
 #Aqui es donde empieza el test de las preguntas
 
 		
-ef crearPreguntas():
+def crearPreguntas():
 	pass
 
-def testCrearPreguntas():
+def testCrearPregunta():
 	print("Test para crear preguntas: ")
 	global url
 	test_url = url + "api/preguntas/nueva"
 	datos = dict(
-		competencia ='Buena onda' 
-			pregunta = 'Escoge el que consideres que describe mejor a Abdul Hamid alias abs'
-	    		)
+		competencia ='Buena onda',
+		pregunta = 'Escoge el que consideres que describe mejor a Abdul Hamid alias abs'
+	    )
 
 	r = requests.post(test_url, data=datos)
 	print(r.status_code)
@@ -237,10 +135,10 @@ def testActualizarPreguntas():
 	print("Test actualizar la pregunta:")
 	global url
 	# rpe = '79020'
-	id ='4'
+	id ='1'
 	test_url = url + "api/preguntas/{}/actualizar".format(id)
 	datos = dict(
-	    		competencia= 'Ambicioso/a'
+	    		competencia= 'Ambicioso/a',
 	    		pregunta ='Define tu personalidad:'
 	    		)
 	r = requests.put(test_url, data=datos)
@@ -264,20 +162,6 @@ def testConsultarPreguntas():
 		print("Exitoso!")
 	else:
 		print("Fracaso!")
-
-	# datos = dict(
-	#    		competencia= 'Ambicioso/a'
-	#     	pregunta ='Define tu personalidad:'
-	#    		)
-	# for (k,v) in r.json().items():
-	# 	print("key: {}, value: {}".format(k,v))
-	# 	print("comparar valores:")
-	# 	if datos[k] == v:
-	# 		pass
-	# 		#print("es igual")
-	# 	else:
-	# 		pass
-	# 		#print("error en {}: valor = {}, esperado = {}".format(k,v,datos[k]))
 
 
 
@@ -306,6 +190,88 @@ def testConsultarPreguntas():
 		print("Fracaso!")		
 
 
+def crearRespuestas():
+	pass
+
+def testCrearRespuesta():
+	print("Test para crear respuestas: ")
+	global url
+	test_url = url + "api/respuestas/nueva"
+	datos = dict(
+		usuario = 'alejandra',
+		pregunta = 'acomoda la competencia en el recuadro adecuado',
+		respuesta = 'ambicioso/a'
+	    		)
+
+	r = requests.post(test_url, data=datos)
+	print(r.status_code)
+	if (r.status_code == 200):
+		print("Exitoso!")
+		print(r.content.decode("utf-8"))
+	else:
+		print("Fracaso!")
+		print(r.content.decode("utf-8"))
+
+
+def testActualizarRespuestas():
+	print("Test actualizar la respuesta:")
+	global url
+	# rpe = '79020'
+	id ='3'
+	test_url = url + "api/respuestas/{}/actualizar".format(id)
+	datos = dict(
+	    		usuario='alejandra',
+	    		pregunta='Escoge lo que creas que peor lo describe',
+	    		respuesta='Toma de decisiones'
+	    		)
+	r = requests.put(test_url, data=datos)
+	if (r.status_code == 200):
+		print("Exitoso!")
+		print(r.content.decode("utf-8"))
+	else:
+		print("Fracaso!")
+		print(r.content.decode("utf-8"))
+
+def testConsultarRespuestas():
+	print("Test consultar una respuesta en especifico:")
+	global url
+	# rpe = '79020'
+	id='3'
+	test_url = url + "api/respuestas/{}".format(id)
+
+	r = requests.get(test_url)
+	print(r.json())
+	if isinstance(r.json(), dict):
+		print("Exitoso!")
+	else:
+		print("Fracaso!")
+
+
+def testBorrarRespuestas():
+	print("Test para borrar la respuesta: ")
+	global url
+	# rpe = '79020'
+	id='3'
+	test_url = url + "api/respuestas/{}/borrar".format(id)
+	r = requests.delete(test_url)
+	if (r.status_code == 200):
+		print("Exitoso!")
+		print(r.content.decode("utf-8"))
+	else:
+		print("Fracaso!")
+		print(r.content.decode("utf-8"))
+
+def testConsultarRespuestas():
+	print("Test para consultar todas las respuestas: ")
+	global url
+	test_url = url + "api/respuestas/todas"
+	r = requests.get(test_url)
+	if len(r.json()) > 0:
+		print("Exitoso!")
+	else:
+		print("Fracaso!")
+
+
 
 
 if __name__ == '__main__':
@@ -313,21 +279,25 @@ if __name__ == '__main__':
 	crearUsuarios()
 	crearRespuestas()
 	crearPreguntas()
-    testCrearUsuario()
+
+	testCrearUsuario()
 	testActualizarUsuario()
 	testConsultarUsuario()
 	testBorrarUsuario()
 	testConsultarUsuarios()
-	testCrearRespuestas()
-	testActualizarRespuestas()
-	testConsultarRespuestas()
-	testBorrarRespuestas()
-	testConsultarRespuestas()
-	testCrearPreguntas()
+
+	testCrearPregunta()
 	testActualizarPreguntas()
 	testConsultarPreguntas()
 	testBorrarPreguntas()
 	testConsultarPreguntas()
+
+	testCrearRespuesta()
+	testActualizarRespuestas()
+	testConsultarRespuestas()
+	testBorrarRespuestas()
+	testConsultarRespuestas()
+
 
 
 
