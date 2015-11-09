@@ -9,13 +9,13 @@ def crearUsuarios():
 def testCrearUsuario():
 	print("test crear usuario: ")
 	global url
-	test_url = url + "api/usuario/nuevo"
+	test_url = url + "api/usuarios/nuevo"
 	datos = dict(
-	    		rpe='79020',
-		    	nombre='Rivera Rodriguez Pedro',
-		    	puesto='Gerente',
+	    		rpe='121292',
+		    	nombre='abdul hamid achik',
+		    	puesto='Subgerente',
 		    	departamento='Gerencia',
-		    	correo='pedro.rivera2@cfe.gob.mx',
+		    	correo='abdulachik@gmail.com',
 		    	zona='GTZN'
 	    		)
 
@@ -32,14 +32,14 @@ def testCrearUsuario():
 def testActualizarUsuario():
 	print("test actualizar usuario: ")
 	global url
-	rpe = '79020'
-	test_url = url + "api/usuario/{}/actualizar".format(rpe)
+	rpe = '121292'
+	test_url = url + "api/usuarios/{}/actualizar".format(rpe)
 	datos = dict(
-	    		rpe='79020',
-		    	nombre='Rivera Pedro',
+	    		rpe='121292',
+		    	nombre='Abdul Hamid Achik',
 		    	puesto='Sub Gerente',
 		    	departamento='Gerencia',
-		    	correo='pedro.rivera@cfe.gob.mx',
+		    	correo='abdulachik@gmail.com',
 		    	zona='GTZN'
 	    		)
 	r = requests.put(test_url, data=datos)
@@ -53,8 +53,8 @@ def testActualizarUsuario():
 def testConsultarUsuario():
 	print("test consultar usuario en especifico: ")
 	global url
-	rpe = '79020'
-	test_url = url + "api/usuario/{}".format(rpe)
+	rpe = '121292'
+	test_url = url + "api/usuarios/{}".format(rpe)
 
 	r = requests.get(test_url)
 	print(r.json())
@@ -86,7 +86,7 @@ def testBorrarUsuario():
 	print("test borrar usuario: ")
 	global url
 	rpe = '79020'
-	test_url = url + "api/usuario/{}/borrar".format(rpe)
+	test_url = url + "api/usuarios/{}/borrar".format(rpe)
 	r = requests.delete(test_url)
 	if (r.status_code == 200):
 		print("Exitoso!")
@@ -98,7 +98,7 @@ def testBorrarUsuario():
 def testConsultarUsuarios():
 	print("test consultar todos los usuarios: ")
 	global url
-	test_url = url + "api/usuario/todos"
+	test_url = url + "api/usuarios/todos"
 	r = requests.get(test_url)
 	if len(r.json()) > 0:
 		print("Exitoso!")
