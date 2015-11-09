@@ -181,3 +181,15 @@ a:hover{
     margin-left: 5%;
     padding: 5% 15% 15% 15%;
 }
+
+
+    body {
+  background-image:url("https://s3.amazonaws.com/StartupStockPhotos/uploads/38.jpg");
+  background-size: 100%;
+  color: #606468;
+  font: 400 0.875rem/1.5 "Open Sans", sans-serif;
+  margin: 0;
+  min-height: 100%;
+}
+
+

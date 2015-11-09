@@ -181,16 +181,16 @@ def evaluando_neutras():
 			)
 	return "ok"
 
-@app.route('/registrarUsuario', methods['POST'])
-def registrarUsuario():
-	models.Usuario.nuevo()
-	    	rpe=request.form['rpe'],
-	    	nombre=request.form['nombre'],
-	    	puesto=request.form['puesto'],
-	    	departamento=request.form['departamento'],
-	    	correo=request.form['correo'],
-	    	zona=request.form['zona'])
-		)
+# @app.route('/registrarUsuario', methods['POST'])
+# def registrarUsuario():
+# 	models.Usuario.nuevo()
+# 	    	rpe=request.form['rpe'],
+# 	    	nombre=request.form['nombre'],
+# 	    	puesto=request.form['puesto'],
+# 	    	departamento=request.form['departamento'],
+# 	    	correo=request.form['correo'],
+# 	    	zona=request.form['zona'])
+# 		)
 
 
 @app.route('/iniciar_sesion', methods=['POST'])
@@ -210,8 +210,6 @@ def iniciar_sesion():
 @login_required
 def cerrar_sesion():
 	session.pop('logged_in', None)
-    flash('No se ha ingresado')
-    return redirect(url_for('index'))
 
 
 @app.route('/get_competencias')
