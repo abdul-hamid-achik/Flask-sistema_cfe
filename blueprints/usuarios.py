@@ -5,15 +5,15 @@ from models import Usuario
 import json
 import datetime
 
-usuario = Blueprint('usuario', __name__ )
+usuarios = Blueprint('usuarios', __name__ )
 
-@usuario.route('/todos')
+@usuarios.route('/todos')
 def usuarios_all():
 	usuarios = Usuario.select()
 	lista_usuarios = [usuario.to_json() for usuario in usuarios]
 	return json.dumps(lista_usuarios)
 
-@usuario.route('/<rpe>')
+@usuarios.route('/<rpe>')
 def usuario_info(rpe):
 	try:
 		usuario = Usuario.select().where(Usuario.rpe == rpe)
@@ -21,7 +21,7 @@ def usuario_info(rpe):
 	except:
 		return "Error!", 404
 
-@usuario.route('/nuevo', methods=['POST'])
+@usuarios.route('/nuevo', methods=['POST'])
 def usuario_nuevo():
 	try:
 		Usuario.nuevo(
@@ -35,7 +35,7 @@ def usuario_nuevo():
 	except:
 		return "Error!", 404
 
-@usuario.route('/<rpe>/borrar', methods=['DELETE'])
+@usuarios.route('/<rpe>/borrar', methods=['DELETE'])
 def usuario_borrar(rpe):
 	try:
 		usuario = Usuario.select().where(Usuario.rpe == rpe)
@@ -47,7 +47,7 @@ def usuario_borrar(rpe):
 	except:
 		return "Error!", 404
 
-@usuario.route('/<rpe>/actualizar', methods=['PUT'])
+@usuarios.route('/<rpe>/actualizar', methods=['PUT'])
 def usuario_actualizar(rpe):
 	try:
 		usuario = Usuario.update(

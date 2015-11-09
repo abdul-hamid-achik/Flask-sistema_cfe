@@ -1,8 +1,10 @@
 from flask import (Flask, g, render_template, flash, redirect, url_for, request, make_response, jsonify)
 from flask.ext.login import (LoginManager, login_user, logout_user, login_required, current_user)
 from flask.ext.bcrypt import check_password_hash
-from blueprints.usuario import usuario
+from blueprints.usuarios import usuarios
 from blueprints.competencias import competencias
+from blueprints.preguntas import preguntas
+from blueprints.respuestas import respuestas
 import models
 from werkzeug import secure_filename
 import os
@@ -15,8 +17,10 @@ UPLOAD_FOLDER = os.path.dirname(os.path.abspath(__file__)) + '/static/media/uplo
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.secret_key = 'niggersan'
-app.register_blueprint(usuario, url_prefix='/api/usuario')
+app.register_blueprint(usuarios, url_prefix='/api/usuarios')
 app.register_blueprint(competencias, url_prefix='/api/competencias')
+app.register_blueprint(preguntas, url_prefix='/api/preguntas')
+app.register_blueprint(respuestas, url_prefix='/api/respuestas')
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = '/'
@@ -313,6 +317,7 @@ def respuestas_preguntas():
 	
 if __name__ == '__main__':
 	#models.drop()
+	
 	models.initialize()
 	app.run(
     	debug=DEBUG,
