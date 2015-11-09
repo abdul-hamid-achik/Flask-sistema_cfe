@@ -15,13 +15,13 @@ $scope.salirSESION = function(){
 
   }
 
-  //   $scope.nuevoUsuario = function(){
-  //   	$http.post('/nuevo', $scope.formData)
-	 //    .success(function (response) {
-	 //    	console.log(response);
-  // }
+    $scope.nuevoUsuario = function(){
+    	$http.post('/nuevoUsuario', $scope.formData)
+	    .success(function (response) {
+	    	console.log(response);
+  }
 
-  // }
+  }
 
 
 }]);

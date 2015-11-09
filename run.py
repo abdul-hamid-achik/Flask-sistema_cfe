@@ -210,8 +210,8 @@ def iniciar_sesion():
 @login_required
 def cerrar_sesion():
 	session.pop('logged_in', None)
-    flash('You were logged out')
-    return redirect(url_for('show_entries'))
+    flash('No se ha ingresado')
+    return redirect(url_for('index'))
 
 
 @app.route('/get_competencias')
