@@ -25,6 +25,8 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = '/'
 
+#Ale es mejor programadora que rocha
+
 @login_manager.user_loader
 def cargar_usuario(usuarioid):
     try:
