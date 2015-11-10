@@ -8,6 +8,7 @@ import datetime
 
 preguntas = Blueprint('preguntas', __name__ )
 
+
 @preguntas.route('/todas')
 def preguntas_all():
 	preguntas = Preguntas.select()
@@ -43,6 +44,7 @@ def pregunta_borrar(id):
 			return "Error!", 404
 	except:
 		return "Error!", 404
+
 
 @preguntas.route('/<id>/actualizar', methods=['PUT'])
 def pregunta_actualizar(id):
