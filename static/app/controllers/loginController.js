@@ -20,19 +20,13 @@ cfe.controller('loginCtrl', ['$http', '$scope', function($http, $scope){
        }
      }
 
-
-
-    $scope.crearUsuario = function(){
-        var mostrar = $('registarUsuario').html();
-        $http.post('/registarUsuario')
-
-          .success(function(response)
-          {
-            console.log(response);
-          }         
+      $scope.crearUsuario = function() {
+        // $http.post('/iniciar_sesion', $scope.formData)
+        return {
+          templateUrl: 'registrarUsuario.html'
+        };
+      
     }
-
-
   
 
 

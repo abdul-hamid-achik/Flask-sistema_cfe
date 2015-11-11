@@ -1,9 +1,22 @@
 <div class="wrapper" ng-controller="autoevaluacion">
 
 	<div class="autoevaluacion">
-	<h1>Autoevaluacion</h1>
+	<h1>Autoevaluación</h1>
 	<ul>
-	
+	<h2>Acomode las competencias como mejor considere:</h2>
+	<div class="listaCompetencias">
+	<ul>
+
+<!-- Esta lista que vaya en la izquierda del programa -->
+		<li class="competencias" ng-repeat="competencia in Competencias">{{competencia.descripcion | ordenar }}</li>
 	</ul>
 	</div>
+<!-- Esta lista que vaya en la derecha  -->
+<div id="acomodarCompetencias" class="acomodarCompetencias">
+	<input id="competenciasExistentes" placeholder="Competencias que mejor lo describen"></input>
+	<input id="competenciasNeutras" placeholder="Competencias neutras"></input>
+	<input id="competenciasAusentes" placeholder="Competencias que peor lo describen"></input>
+	</div>
+	</div>
+
 </div>
