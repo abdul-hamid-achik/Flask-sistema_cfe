@@ -6,12 +6,13 @@ import datetime
 
 sesiones = Blueprint('sesiones', __name__ )
 
-@sesiones.route('/login', methods=['POST'])
+@sesiones.route('/iniciar_sesion', methods=['POST'])
 def sesion_entrar():
-    pass
+	
+  	
 
 
-@sesiones.route('/logout')
+@sesiones.route('/cerra_sesion')
 def sesion_salir():
 	pass
 

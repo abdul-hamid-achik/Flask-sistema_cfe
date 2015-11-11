@@ -1,8 +1,10 @@
 <div id="acceso">
     <form id="form">
-        <input type="email" placeholder="correo" id="correo" name="correo" ng-model="formData.correo">
+        <input type="email" placeholder="correo" id="correo" name="correo" ng-model="formData.correo" required>
+        <p ng-show="formData.correo.$invalid && !formData.correo.$pristine" class="help-block">You e-mail is required.</p>
         <br>
         <input type="password" placeholder="rpe" id="password" name="password" ng-model="formData.password">
+        <p ng-show="formData.password.$invalid && !formData.password.$pristine" class="help-block">Enter a valid password.</p>
         <br><br><br>
         <button class="btn btn-success" type="submit" ng-click="submit()">Iniciar Sesion</button>
     </form>
