@@ -94,37 +94,37 @@
       }
   }
 
-    $scope.si = function(){
-        var comp = $('h1').html();
-        $http.post('/evaluando', {
-          colega : $scope.colega,
-          competencia : $scope.competencia_actual,
-          tipo : 'Existentes'
-        }).success(function(response){
-          console.log(response);
-        });
+    // $scope.si = function(){
+    //     var comp = $('h1').html();
+    //     $http.post('/evaluando', {
+    //       colega : $scope.colega,
+    //       competencia : $scope.competencia_actual,
+    //       tipo : 'Existentes'
+    //     }).success(function(response){
+    //       console.log(response);
+    //     });
 
-        $scope.competencias_existentes.push(comp);
-        borrarTitulo();
-                get_existentes();
-    }
+    //     $scope.competencias_existentes.push(comp);
+    //     borrarTitulo();
+    //             get_existentes();
+    // }
 
 
-    $scope.no = function(){
-        var comp = $('h1').html();
-        $http.post('/evaluando', {
-          colega : $scope.colega,
-          competencia : $scope.competencia_actual,
-          tipo : 'Inexistentes'
-        }).success(function(response){
-          console.log(response);
-        });
+    // $scope.no = function(){
+    //     var comp = $('h1').html();
+    //     $http.post('/evaluando', {
+    //       colega : $scope.colega,
+    //       competencia : $scope.competencia_actual,
+    //       tipo : 'Inexistentes'
+    //     }).success(function(response){
+    //       console.log(response);
+    //     });
 
-        $scope.competencias_inexistentes.push(comp);
-        borrarTitulo()
-        get_inexistentes();
+    //     $scope.competencias_inexistentes.push(comp);
+    //     borrarTitulo()
+    //     get_inexistentes();
 
-    }
+    // }
 
     $scope.selectedValue = function(value){
       $scope.colega = value;
