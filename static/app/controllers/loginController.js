@@ -10,7 +10,7 @@ cfe.controller('loginCtrl', ['$http', '$scope', function($http, $scope){
       console.log(response);
 
       if(!response.success){
-          $scope.errorEmail = response.errors.email;
+          $scope.errorEmail = response.errors.correo;
           $scope.errorRpe = response.errors.rpe;
         } else {
           $scope.message = response.message;
@@ -19,20 +19,47 @@ cfe.controller('loginCtrl', ['$http', '$scope', function($http, $scope){
 
        }
      }
+
+
+
+    $scope.crearUsuario = function(){
+        var mostrar = $('registarUsuario').html();
+        $http.post('/registarUsuario')
+
+          .success(function(response)
+          {
+            console.log(response);
+          }         
+    }
+
+
+  
+
+
      $scope.registrarUsuario = function(){
     	$http.post('/registrarUsuario', $scope.formData)
 	    .success(function (response) {
 	    	console.log(response);
 
+        if(!response.success){
+          $scope.ErrorNombre = response.errors.nombre;
+          $scope.ErrorPuesto = response.errors.puesto;
+          $scope.ErrorDepartamento = response.errors.departamento;
+          $scope.ErrorEmail = response.errors.correo;
+          $scope.ErrorZona = response.errors.zona;
+          $scope.ErrorRpe = response.errors.rpe;
+
+        } else {
+          $scope.message = response.message;
+        }
+
+
         }
   }
 
   }
-  }
- 
-
 
 }]);
 
 
-
+ 

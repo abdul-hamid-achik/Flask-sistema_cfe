@@ -2,11 +2,17 @@
 <h1>Registro para nuevo usuario.</h1>
     <form id="form">
         <input type="text" placeholder="nombre" id="nombre" name="nombre" ng-model="formData.nombre"><br>
+        <span class="help-block" ng-show="ErrorNombre">{{ErrorNombre}}</span>
         <input type="text" placeholder="puesto" id="puesto" name="puesto" ng-model="formData.puesto"><br>
+        <span class="help-block" ng-show="ErrorPuesto">{{ErrorPuesto}}</span>
         <input type="text" placeholder="departamento" id="departamento" name="departamento" ng-model="formData.departamento"> <br>
+        <span class="help-block" ng-show="ErrorDepartamento"></span>
         <input type="email" placeholder="correo" id="correo" name="correo" ng-model="formData.correo"> <br>
+        <span class="help-block" ng-show="ErrorEmail">{{ErrorCorreo}}</span>
         <input type="text" placeholder="zona" id="zona" name="zona" ng-model="formData.zona"> <br>
+        <span class="help-block" ng-show="ErrorZona">{{ErrorZona}}</span>
         <input type="password" placeholder="rpe" id="password" name="password" ng-model="formData.password">
+        <span class="help-block" ng-show="Error.rpe">{{ErrorRpe}}</span>
         <button type="submit" ng-click="registrarUsuario()">Entrar</button>
     </form>
   {{ formData }}
