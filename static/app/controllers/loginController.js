@@ -7,31 +7,29 @@ cfe.controller('loginCtrl', ['$http', '$scope', function($http, $scope){
 
 	    $http.post('/iniciar_sesion', $scope.formData)
 	    .success(function (response) {
-	    	console.log(response)
+      console.log(response);
 
-	    });
+      if(!response.success){
+          $scope.errorEmail = response.errors.email;
+          $scope.errorRpe = response.errors.rpe;
+        } else {
+          $scope.message = response.message;
+        }
 
-    }
 
-
-  }
-
-    $scope.nuevoRegistro = function(){
+       }
+     }
+     $scope.registrarUsuario = function(){
     	$http.post('/registrarUsuario', $scope.formData)
 	    .success(function (response) {
 	    	console.log(response);
+
+        }
   }
 
-
-
-
-
-
-
   }
-
-
   }
+ 
 
 
 }]);
