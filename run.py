@@ -181,16 +181,19 @@ def evaluando_neutras():
 			)
 	return "ok"
 
-@app.route('/registrarUsuario', methods['POST'])
-def registrarUsuario():
-	models.Usuario.nuevo()
-	    	rpe=request.form['rpe'],
-	    	nombre=request.form['nombre'],
-	    	puesto=request.form['puesto'],
-	    	departamento=request.form['departamento'],
-	    	correo=request.form['correo'],
-	    	zona=request.form['zona'])
-		)
+# @app.route('/nuevo', methods['POST'])
+# def registrarUsuario():
+# 	try:
+# 		Usuario.nuevo(
+# 	    	rpe=request.form['rpe'],
+# 	    	nombre=request.form['nombre'],
+# 	    	puesto=request.form['puesto'],
+# 	    	departamento=request.form['departamento'],
+# 	    	correo=request.form['correo'],
+# 	    	zona=request.form['zona'])
+# 		return "OK!", 200
+# 	except:
+# 		return "Error!", 404
 
 
 @app.route('/iniciar_sesion', methods=['POST'])
@@ -206,7 +209,7 @@ def iniciar_sesion():
 		return 'Login failed.'
 		
 
-# 
+
 
 
 @app.route('/get_competencias')

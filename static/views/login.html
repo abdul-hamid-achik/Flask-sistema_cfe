@@ -3,9 +3,7 @@
     	<label>E-mail:</label>
         <input type="email" id="correo"  ng-model="formData.correo" required>
         <span class ="help-block" ng-show="errorEmail">{{errorEmail}}</span>
-        
-
-        <br>
+   		 <br>
         <label>RPE:</label>
         <input type="password" id="password" ng-model="formData.password">
         <span class="help-block" ng-show="ErrorRpe">{{errorRpe}}</span>
@@ -14,7 +12,8 @@
         <button type="submit" ng-submit="submit()">Iniciar Sesion</button>
 
         <label> Eres nuevo usuario? </label>
-        <button type="submit" href="registrarUsuario.html" ng-click="crearUsuario()">Crea un nuevo usuario</button>
+       
+        <button class="btn" ng-click="crearUsuario()">Crea un nuevo usuario</button>
        
     </form>
 	{{ formData }}
