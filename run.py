@@ -25,7 +25,6 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = '/'
 
-#Ale es mejor programadora que rocha
 
 @login_manager.user_loader
 def cargar_usuario(usuarioid):
@@ -182,13 +181,35 @@ def evaluando_neutras():
 			)
 	return "ok"
 
+# @app.route('/registrarUsuario', methods['POST'])
+# def registrarUsuario():
+# 	models.Usuario.nuevo()
+# 	    	rpe=request.form['rpe'],
+# 	    	nombre=request.form['nombre'],
+# 	    	puesto=request.form['puesto'],
+# 	    	departamento=request.form['departamento'],
+# 	    	correo=request.form['correo'],
+# 	    	zona=request.form['zona'])
+# 		)
+
+
+@app.route('/iniciar_sesion', methods=['POST'])
+def iniciar_sesion():
+	print(request.form['correo'])
+	usuario = models.Usuario.get(models.Usuario.correo**request.form['correo'])
+	if request.form['password'] == usuario.rpe:
+		session['login_user(usuario)']=True
+		status= True
+		return 'Login successfull'
+	else:
+		status = False
+		return 'Login failed.'
+		
 
 @app.route('/cerrar_sesion')
 @login_required
 def cerrar_sesion():
-	logout_user()
-	flash('Haz salido de la sesion exitosamente!', 'success')
-	return redirect(url_for('main'))
+	session.pop('logged_in', None)
 
 
 @app.route('/get_competencias')
@@ -293,15 +314,6 @@ def reportes():
 		]
 	}
 	return json.dumps(datos)
-
-@app.route('/iniciar_sesion', methods=['POST'])
-def iniciar_sesion():
-	print(request.form['correo'])
-	usuario = models.Usuario.get(models.Usuario.correo**request.form['correo'])
-	if request.form['password'] == usuario.rpe:
-		login_user(usuario)
-		return 'Login successfull'
-
 
 @app.route('/get_preguntas', methods=['POST'])
 @login_required
