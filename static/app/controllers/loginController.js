@@ -1,4 +1,4 @@
-cfe.controller('loginCtrl', ['$http', '$scope', function($http, $scope){
+cfe.controller('loginCtrl', ['$http', '$scope', '$window', function($http, $scope, $window){
 	$scope.formData = {};
   $scope.form = { url: '/api/sesiones/entrar', entrar: "Entrar", registrarse : "Registrarse", bandera: false, mensaje: "Eres nuevo?" };
   $scope.registrarUsuario = function(){
@@ -8,9 +8,10 @@ cfe.controller('loginCtrl', ['$http', '$scope', function($http, $scope){
   }
 
   $scope.enviar = function(){
-      $http.post($scope.form.url, $scope.formData)
+    alert("asd");
+      $http.post($scope.form.url, JSON.stringify($scope.formData), {headers: {'Content-Type': 'application/json'}})
       .success(function (respuesta){
-        $window.location.href = '/sistema';
+        $window.location.href = '/#/sistema';
       }).error(function (respuesta){
         $scope.formData = {};
         $scope.form.entrar = "Intentar de nuevo?"

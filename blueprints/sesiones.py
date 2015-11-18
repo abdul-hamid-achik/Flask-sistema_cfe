@@ -1,6 +1,4 @@
-from flask import (Blueprint, request) 
-import sys
-sys.path.insert(0, '~/Projects/Flask-sistema_cfe')
+from flask import (Blueprint, request)
 from models import Usuario
 import json
 import datetime
@@ -10,7 +8,8 @@ sesiones = Blueprint('sesiones', __name__ )
 @sesiones.route('/entrar', methods=['POST'])
 def sesion_entrar():
   	try:
-  		usuario = Usuario.select().where((Usuario.rpe == request.form["rpe"]) & (Usuario.correo == request.form['correo']))[0]
+  		post = request.get_json()
+  		usuario = Usuario.select().where((Usuario.rpe == post.get("rpe")) & (Usuario.correo == post.get('correo')))[0]
   		if usuario:
   			return "Ok!", 200
   		else:

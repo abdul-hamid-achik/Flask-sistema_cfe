@@ -112,6 +112,7 @@ class Competencias(Model):
 
     def to_json(self):
         return {
+        "id" : self.id,
         "nombre" : self.nombre,
         "descripcion" : self.descripcion
         }
