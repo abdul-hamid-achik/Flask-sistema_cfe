@@ -1,40 +1,25 @@
-cfe.controller('loginCtrl', ['$http', '$scope', function($http, $scope){
+cfe.controller('loginCtrl', ['$http', '$scope', '$window', function($http, $scope, $window){
 	$scope.formData = {};
-    $scope.submit = function(){
-
-	    $http.post('/iniciar_sesion', $scope.formData)
-	    .success(function (response) {
-	    	console.log(response);
-	    });
-
-    }
-
-
+  $scope.form = { url: '/api/sesiones/entrar', entrar: "Entrar", registrarse : "Registrarse", bandera: false, mensaje: "Eres nuevo?" };
+  $scope.registrarUsuario = function(){
+    $scope.form.bandera = $scope.form.bandera == false ? 
+    $scope.form = { url: '/api/usuarios/nuevo', entrar: "Registrarse", registrarse : "Entrar", bandera: true, mensaje: "Ya tienes cuenta?" }: 
+    $scope.form = { url: '/api/sesiones/entrar', entrar: "Entrar", registrarse : "Registrarse", bandera: false, mensaje: "Eres nuevo?" };
   }
 
-    $scope.nuevoUsuario = function(){
-    	$http.post('/registrarUsuario', $scope.formData)
-	    .success(function (response) {
-	    	console.log(response);
-  }
+  $scope.enviar = function(){
+    alert("asd");
+      $http.post($scope.form.url, JSON.stringify($scope.formData), {headers: {'Content-Type': 'application/json'}})
+      .success(function (respuesta){
+        $window.location.href = '/#/sistema';
+      }).error(function (respuesta){
+        $scope.formData = {};
+        $scope.form.entrar = "Intentar de nuevo?"
+      });
 
-
-
-
-<input type="text" placeholder="nombre" id="nombre" name="nombre" ng-model="formData.nombre">
-        <input type="text" placeholder="puesto" id="puesto" name="puesto" ng-model="formData.puesto">
-        <input type="text" placeholder="departamento" id="departamento" name="departamento" ng-model="formData.departamento"> 
-        <input type="email" placeholder="correo" id="correo" name="correo" ng-model="formData.correo">
-        <input type="text" placeholder="zona" id="zona" name="zona" ng-model="formData.zona">
-        <input type="password" placeholder="rpe" id="password" name="password" ng-model="formData.password">
-
-
-
-
-  }
-
-
-  }
-
+  };
 
 }]);
+
+
+ 

@@ -24,13 +24,14 @@ def usuario_info(rpe):
 @usuarios.route('/nuevo', methods=['POST'])
 def usuario_nuevo():
 	try:
+		post = request.get_json()
 		Usuario.nuevo(
-	    	rpe=request.form['rpe'],
-	    	nombre=request.form['nombre'],
-	    	puesto=request.form['puesto'],
-	    	departamento=request.form['departamento'],
-	    	correo=request.form['correo'],
-	    	zona=request.form['zona'])
+	    	rpe=post.get('rpe'),
+	    	nombre=post.get('nombre'),
+	    	puesto=post.get('puesto'),
+	    	departamento=post.get('departamento'),
+	    	correo=post.get('correo'),
+	    	zona=post.get('zona'))
 		return "OK!", 200
 	except:
 		return "Error!", 404
@@ -50,13 +51,14 @@ def usuario_borrar(rpe):
 @usuarios.route('/<rpe>/actualizar', methods=['PUT'])
 def usuario_actualizar(rpe):
 	try:
+		post = request.get_json()
 		usuario = Usuario.update(
-			rpe=request.form['rpe'],
-	    	nombre=request.form['nombre'],
-	    	puesto=request.form['puesto'],
-	    	departamento=request.form['departamento'],
-	    	correo=request.form['correo'],
-	    	zona=request.form['zona']).where(Usuario.rpe == rpe)
+	    	rpe=post.get('rpe'),
+	    	nombre=post.get('nombre'),
+	    	puesto=post.get('puesto'),
+	    	departamento=post.get('departamento'),
+	    	correo=post.get('correo'),
+	    	zona=post.get('zona')).where(Usuario.rpe == rpe)
 		usuario.execute()
 		return "OK!", 200
 	except:

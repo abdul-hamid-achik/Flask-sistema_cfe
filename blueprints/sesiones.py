@@ -1,18 +1,25 @@
-from flask import (Blueprint, request) 
-import sys
-sys.path.insert(0, '~/Projects/Flask-sistema_cfe')
+from flask import (Blueprint, request)
+from models import Usuario
 import json
 import datetime
 
 sesiones = Blueprint('sesiones', __name__ )
 
-@sesiones.route('/login', methods=['POST'])
+@sesiones.route('/entrar', methods=['POST'])
 def sesion_entrar():
-    pass
+  	try:
+  		post = request.get_json()
+  		usuario = Usuario.select().where((Usuario.rpe == post.get("rpe")) & (Usuario.correo == post.get('correo')))[0]
+  		if usuario:
+  			return "Ok!", 200
+  		else:
+  			return "Error!", 404
+  	except:
+  		return "Error!", 404
 
 
-@sesiones.route('/logout')
+@sesiones.route('/salir')
 def sesion_salir():
-	pass
+	return "Ok!", 200
 
 

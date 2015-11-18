@@ -1,17 +1,23 @@
 <div class="wrapper" ng-controller="autoevaluacion">
-      <select  id="seleccionar_competencias" ng-model="competencia" ng-options="competencia.nombre for competencia in competencias" ng-change="selectedValue(competencia)">
-      	<option value='' disabled>Seleccionar una competencia</option>
-      </select>
+
 	<div class="autoevaluacion">
-	<h1>Autoevaluacion</h1>
+	<h1>Evaluación personal</h1>
 	<ul>
-		<li ng-repeat="pregunta in preguntas">{{ pregunta.pregunta }}
-		<form action="/respuestas_preguntas" method="POST">
-			<label for="True">Verdadero</label>
-			<input id="True" type="radio" name="respuesta" value="True">
-			<label for="False">Falso</label>
-			<input id="False" type="radio" name="respuesta" value="False">
-		</form></li>
+	<h2>Acomode las competencias como mejor considere:</h2>
+	<label>En cada recuadro debe existir un maximo de 20 competencias</label>
+	<div class="listaCompetencias">
+	<ul>
+
+<!-- Esta lista que vaya en la izquierda del programa -->
+		<li class="competencias" ng-repeat="competencia in Competencias">{{competencia.descripcion | ordenar }}</li>
 	</ul>
 	</div>
+<!-- Esta lista que vaya en la derecha  -->
+<div id="acomodarCompetencias" class="acomodarCompetencias">
+	<input id="competenciasExistentes" placeholder="Competencias que mejor lo describen"></input>
+	<input id="competenciasNeutras" placeholder="Competencias neutras"></input>
+	<input id="competenciasAusentes" placeholder="Competencias que peor lo describen"></input>
+	</div>
+	</div>
+
 </div>

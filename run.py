@@ -5,6 +5,8 @@ from blueprints.usuarios import usuarios
 from blueprints.competencias import competencias
 from blueprints.preguntas import preguntas
 from blueprints.respuestas import respuestas
+
+from blueprints.sesiones import sesiones
 import models
 from werkzeug import secure_filename
 import os
@@ -21,6 +23,8 @@ app.register_blueprint(usuarios, url_prefix='/api/usuarios')
 app.register_blueprint(competencias, url_prefix='/api/competencias')
 app.register_blueprint(preguntas, url_prefix='/api/preguntas')
 app.register_blueprint(respuestas, url_prefix='/api/respuestas')
+app.register_blueprint(sesiones, url_prefix='/api/sesiones')
+
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = '/'
@@ -181,16 +185,19 @@ def evaluando_neutras():
 			)
 	return "ok"
 
-# @app.route('/registrarUsuario', methods['POST'])
+# @app.route('/nuevo', methods['POST'])
 # def registrarUsuario():
-# 	models.Usuario.nuevo()
+# 	try:
+# 		Usuario.nuevo(
 # 	    	rpe=request.form['rpe'],
 # 	    	nombre=request.form['nombre'],
 # 	    	puesto=request.form['puesto'],
 # 	    	departamento=request.form['departamento'],
 # 	    	correo=request.form['correo'],
 # 	    	zona=request.form['zona'])
-# 		)
+# 		return "OK!", 200
+# 	except:
+# 		return "Error!", 404
 
 
 @app.route('/iniciar_sesion', methods=['POST'])
@@ -206,10 +213,7 @@ def iniciar_sesion():
 		return 'Login failed.'
 		
 
-@app.route('/cerrar_sesion')
-@login_required
-def cerrar_sesion():
-	session.pop('logged_in', None)
+
 
 
 @app.route('/get_competencias')
