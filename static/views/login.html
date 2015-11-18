@@ -1,20 +1,53 @@
-<div id="acceso">
-    <form id="form">
-    	<label>E-mail:</label>
-        <input type="email" id="correo"  ng-model="formData.correo" required>
-        <span class ="help-block" ng-show="errorEmail">{{errorEmail}}</span>
-   		 <br>
-        <label>RPE:</label>
-        <input type="password" id="password" ng-model="formData.password">
-        <span class="help-block" ng-show="ErrorRpe">{{errorRpe}}</span>
-        
-        <br><br><br>
-        <button type="submit" ng-submit="submit()">Iniciar Sesion</button>
-
-        <label> Eres nuevo usuario? </label>
-       
-        <button class="btn" ng-click="crearUsuario()">Crea un nuevo usuario</button>
-       
-    </form>
-	{{ formData }}
+<div id="acceso" class="container">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">{{ form.entrar }}</h3>
+		</div>
+		<div class="panel-body">
+			<form ng-show="!form.bandera">
+				<div class="form-group">
+			    	<label for="correo">E-mail:</label>
+			        <input class="form-control" type="email" id="correo" ng-model="formData.correo" required>
+		   		</div>
+				<div class="form-group">
+			        <label for="rpe">RPE:</label>
+			        <input class="form-control" type="text" id="rpe" ng-model="formData.rpe" required>
+			    </div>
+		    </form>
+		    <form ng-show="form.bandera">
+		    	<div class="form-group">
+		    		<label>Nombre</label>
+		    		<input ng-model="formData.nombre" class="form-control">
+		    	</div>
+		    	<div class="form-group">
+		    		<label>Correo</label>
+		    		<input type="email" ng-model="formData.correo" class="form-control">
+		    	</div>
+		    	<div class="form-group">
+		    		<label>RPE</label>
+		    		<input ng-model="formData.rpe"  class="form-control">
+		    	</div>
+		    	<div class="form-group">
+		    		<label>Puesto</label>
+		    		<input ng-model="formData.puesto" class="form-control">
+		    	</div>
+		    	<div class="form-group">
+		    		<label>Departamento</label>
+		    		<input ng-model="formData.departamento" class="form-control">
+		    	</div>
+		    	<div class="form-group">
+		    		<label>Zona</label>
+		    		<input ng-model="formData.zona" class="form-control">
+		    	</div>
+		    </form>
+		    <div class="row">
+		    	<div class="col-xs-8">
+			    	<button class="btn btn-info" type="submit" ng-submit="enviar()">{{ form.entrar }}</button>
+		        	<button class="btn btn-default" ng-click="registrarUsuario()">{{ form.registrarse }}</button>
+		        	<label>{{ form.mensaje }}</label>
+		        </div>
+		        <div class="col-xs-4"></div>
+	        </div>
+		</div>
+    </div>
 </div>

@@ -5,6 +5,8 @@ from blueprints.usuarios import usuarios
 from blueprints.competencias import competencias
 from blueprints.preguntas import preguntas
 from blueprints.respuestas import respuestas
+
+from blueprints.sesiones import sesiones
 import models
 from werkzeug import secure_filename
 import os
@@ -21,6 +23,7 @@ app.register_blueprint(usuarios, url_prefix='/api/usuarios')
 app.register_blueprint(competencias, url_prefix='/api/competencias')
 app.register_blueprint(preguntas, url_prefix='/api/preguntas')
 app.register_blueprint(respuestas, url_prefix='/api/respuestas')
+app.register_blueprint(sesiones, url_prefix='/api/sesiones')
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = '/'
