@@ -26,6 +26,7 @@ app.register_blueprint(competencias, url_prefix='/api/competencias')
 app.register_blueprint(preguntas, url_prefix='/api/preguntas')
 app.register_blueprint(respuestas, url_prefix='/api/respuestas')
 app.register_blueprint(sesiones, url_prefix='/api/sesiones')
+
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = '/'

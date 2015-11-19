@@ -29,7 +29,7 @@ def respuestas_nueva():
 @respuestas.route('/<int:id>')
 def respuestas_info(id):
 	try:
-		respuesta = Respuestas.select().where(Respuesta.id == id)
+		respuesta = Respuestas.select().where(Respuesta.id == id)[0]
 		return json.dumps(respuesta(0).to_json()), 200
 	except:
 		return "Error!", 404

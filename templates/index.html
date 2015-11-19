@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-
-
+    <head>
         <meta charset="utf-8">
         <link rel="stylesheet" href="/static/css/bootstrap.css">
         <link rel="stylesheet" href="/static/css/styles.css">
@@ -22,23 +20,24 @@
         <script src="/static/app/controllers/competenciasController.js"></script>
         <script src="/static/app/controllers/reportesController.js"></script>
 
+        <!-- Angular Directives -->
+        <script src="/static/app/directives/competencias.js"></script>
+
     </head>
 
     <body ng-app="cfe">
-
-
     <div class="fondo">
        <div class="fondo">
+           <nav class="navbar navbar-default">
+                <ul class="nav navbar-nav   ">
+                    <li><a href="#/">Inicio</a></li>
+                    <li><a href="#/seleccionar_colegas">Selección</a></li>
+                    <li><a href="#/sistema">Sistema</a></li>
+                    <li><a href="#/auto_evaluacion">Evaluación personal</a></li>
+                    <li><a href="#/resultados">Reporte personal</a></li>
+                </ul>
+            </nav>
             <ng-view>
-                <nav class="navbar navbar-default">
-                    <ul class="nav navbar-nav   ">
-                        <li><a href="#/">Inicio</a></li>
-                        <li><a href="#/seleccionar_colegas">Selección</a></li>
-                        <li><a href="#/sistema">Sistema</a></li>
-                        <li><a href="#/auto_evaluacion">Evaluación personal</a></li>
-                        <li><a href="#/resultados">Reporte personal</a></li>
-                    </ul>
-                </nav>
             </ng-view>
         </div>
     </div>

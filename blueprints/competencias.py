@@ -14,11 +14,11 @@ def competencias_todas():
 	listas_competencias = [competencia.to_json() for competencia in competencias]
 	return json.dumps(listas_competencias)
 
-@competencias.route('/<int:id>')
+@competencias.route('/<id>')
 def competencia_info(id):
 	try:
-		competencia = Competencias.select().where(Competencia.id == id)
-		return json.dumps(competencia[0].to_json()), 200
+		competencia = Competencias.select().where(Competencias.id == id)[0]
+		return json.dumps(competencia.to_json()), 200
 	except:
 		return "Error!", 404
 
@@ -32,7 +32,7 @@ def competencia_nueva():
 	except:
 		return "Error!", 404
 
-@competencias.route('/<int:id>/actualizar', methods=['PUT'])
+@competencias.route('/<id>/actualizar', methods=['PUT'])
 def competencia_actualizar(id):
 	try:
 		competencia = Competencias.update(
@@ -44,7 +44,7 @@ def competencia_actualizar(id):
 	except: 
 		return "Error!", 404
 
-@competencias.route('/<int:id>/borrar', methods=['DELETE'])
+@competencias.route('/<id>/borrar', methods=['DELETE'])
 def competencia_borrar(id):
 	try:
 		competencia = Competencias.select().where(Competencias.id == id)
