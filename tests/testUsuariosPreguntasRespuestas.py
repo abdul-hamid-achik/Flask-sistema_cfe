@@ -3,8 +3,6 @@ import json
 
 url = "http://localhost:5000/"
 
-def crearUsuarios():
-	pass
 
 def testCrearUsuario():
 	print("test crear usuario: ")

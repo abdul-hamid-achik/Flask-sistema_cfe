@@ -15,8 +15,10 @@ import ast
 DEBUG = True
 PORT = 5000
 HOST = '127.0.0.1'
-UPLOAD_FOLDER = os.path.dirname(os.path.abspath(__file__)) + '/static/media/uploads'
-app = Flask(__name__)
+# UPLOAD_FOLDER = os.path.dirname(os.path.path(__file__)) + '/static/media/uploads'
+# UPLOAD_FOLDER = os.path.dirname(os.path.relpath(sys.path[0],"file")) 
+UPLOAD_FOLDER = os.path.dirname(os.path.relpath(__file__)) 
+app = Flask(__name__, instance_relative_config=True)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.secret_key = 'niggersan'
 app.register_blueprint(usuarios, url_prefix='/api/usuarios')

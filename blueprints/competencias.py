@@ -1,6 +1,7 @@
 from flask import Blueprint, request
 import sys
-sys.path.insert(0, '~/Projects/Flask-sistema_cfe')
+# sys.path.insert(0, '~/Projects/Flask-sistema_cfe')
+sys.path.append("../Flask-sistema_cfe")
 from models import Competencias
 import json
 import datetime

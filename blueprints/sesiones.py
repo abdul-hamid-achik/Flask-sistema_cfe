@@ -1,6 +1,6 @@
 from flask import (Blueprint, request) 
 import sys
-sys.path.insert(0, '~/Projects/Flask-sistema_cfe')
+sys.path.append("../Flask-sistema_cfe")
 from models import Usuario
 import json
 import datetime
@@ -18,9 +18,18 @@ def sesion_entrar():
   	except:
   		return "Error!", 404
 
-
 @sesiones.route('/salir')
 def sesion_salir():
 	return "Ok!", 200
+
+@sesiones.route('registrar', methods=['POST'])
+def registrar_usuario(self,nombre, correo, rpe, puesto, departamento,zona):
+		cls.create(
+                nombre=nombre,
+                correo=correo,
+                rpe=rpe,
+                puesto=puesto,
+                departamento=departamento,
+                zona=zona)
 
 
